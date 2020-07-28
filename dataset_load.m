@@ -1,14 +1,29 @@
-clear all
+
 % [hdr, data] = edfread("S004R07.edf");
 % [data, header] = ReadEDF("S004R07.edf");
 [data1,header1] =  lab_read_edf("Dataset/S001R03.edf");
 [data2,header2] =  lab_read_edf("Dataset/S001R04.edf");
+[data3,header3] =  lab_read_edf("Dataset/S001R07.edf");
+[data4,header4] =  lab_read_edf("Dataset/S001R08.edf");
+[data5,header5] =  lab_read_edf("Dataset/S001R11.edf");
+[data6,header6] =  lab_read_edf("Dataset/S001R12.edf");
 
-% record = data(1:64,:);
-% y =transpose(record);
+[LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6);
 
-[LHM, RHM] = split_data(data1,header1);
-[LHI, RHI] = split_data(data2,header2);
+function[LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6)
+    [LHM3, RHM3] = split_data(data1,header1);
+    [LHM7, RHM7] = split_data(data3,header3);
+    [LHM11, RHM11] = split_data(data5,header5);
+
+    [LHI4, RHI4] = split_data(data2,header2);
+    [LHI8, RHI8] = split_data(data4,header4);
+    [LHI12, RHI12] = split_data(data6,header6);
+
+    LHM = transpose([LHM3, LHM7, LHM11]);
+    RHM = transpose([RHM3, RHM7, RHM11]);
+    LHI = transpose([LHI4, LHI8, LHI12]);
+    RHI = transpose([RHI4, RHI8, RHI12]);
+end
 
 function [left_records, right_records] = split_data(data,header)
     pos_list = header.events.POS;
