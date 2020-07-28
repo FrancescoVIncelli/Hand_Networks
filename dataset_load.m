@@ -10,7 +10,7 @@
 
 [LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6);
 
-function[LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6)
+function [LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6)
     [LHM3, RHM3] = split_data(data1,header1);
     [LHM7, RHM7] = split_data(data3,header3);
     [LHM11, RHM11] = split_data(data5,header5);
