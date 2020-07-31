@@ -4,7 +4,6 @@
 % c. left hemisphere density
 % d. right hemisphere density
 
-
 %% a-b)
 [LHM_out_degrees, LHM_in_degrees, LHM_degrees] = compute_degrees(LHM_PDC_Bin);
 [LHI_out_degrees, LHI_in_degrees, LHI_degrees] = compute_degrees(LHI_PDC_Bin);
@@ -12,7 +11,32 @@
 [RHI_out_degrees, RHI_in_degrees, RHI_degrees] = compute_degrees(RHI_PDC_Bin);
 
 %% c-d)
+left =  [1, 2, 3, 8,  9,  10, 15, 16, 17, 22, 25, 26, 30, 31, 32, 33, 39, 41, 43, 45, 47, 48, 49, 50, 56, 57, 61];
+right = [5, 6, 7, 12, 13, 14, 19, 20, 21, 24, 28, 29, 35, 36, 37, 38, 40, 42, 44, 46, 52, 53, 54, 55, 59, 60, 63];
 
+[LHM_left_Hemis] = get_indices_matrix(left, LHM_PDC_Bin);
+[LHM_right_Hemis] = get_indices_matrix(right, LHM_PDC_Bin);
+
+[LHI_left_Hemis] = get_indices_matrix(left, LHI_PDC_Bin);
+[LHI_right_Hemis] = get_indices_matrix(right, LHI_PDC_Bin);
+
+[RHM_left_Hemis] = get_indices_matrix(left, RHM_PDC_Bin);
+[RHM_right_Hemis] = get_indices_matrix(right, RHM_PDC_Bin);
+
+[RHI_left_Hemis] = get_indices_matrix(left, RHI_PDC_Bin);
+[RHI_right_Hemis] = get_indices_matrix(right, RHI_PDC_Bin);
+
+LHM_L_Density = density_dir(LHM_left_Hemis);
+LHM_R_Density = density_dir(LHM_right_Hemis);
+
+LHI_L_Density = density_dir(LHI_left_Hemis);
+LHI_R_Density = density_dir(LHI_right_Hemis);
+
+RHM_L_Density = density_dir(RHM_left_Hemis);
+RHM_R_Density = density_dir(RHM_right_Hemis);
+
+RHI_L_Density = density_dir(RHI_left_Hemis);
+RHI_R_Density = density_dir(RHI_right_Hemis);
 
 %% Test function: [out_degrees, in_degrees, degrees] = compute_degrees(M)
 A = [0,1,1,0,0;
@@ -71,65 +95,25 @@ function [out_degrees, in_degrees, degrees] = compute_degrees(M)
 end
 
 
-%% Density of graph's connections density
-
-function [left_density, right_density] = compute_hemispheres_density(M, channels)
-    %
-    % @params
-    %     M:            PDC binary matrix with shape (N, N)
-    %     channels:     recording channel    
-    % @return
-    %     density:      density of connections in the graph
-    %
-    
-    [n,m] = size(M);
-    assert(n == m, 'Dimensions of input matrix must be equal.');
-    
-    % Get nodes' ids for each hemisphere
-    [left, right] = get_hemisphere_ids(channels);
-    
-    % Compute number of connections in the graph
-    Cl = 0; Cr = 0;
-    for i=1:n
-        for j=1:m
-            if ne(i,j)
-                if ismember(i,left) & ismember(j,left)
-                    Cl = Cl+M(i,j);
-                elseif ismember(i,right) & ismember(j,right)
-                    Cr = Cr+M(i,j);
-                end
-            end
-        end
-    end
-    
-    C_tot = n*(n-1);
-    left_density = Cl / C_tot;
-    right_density = Cr / C_tot;
-end
-
-
 %% Get nodes' ids for hemispheres distinction
 
-function [left, right] = get_hemisphere_ids(channels)
+function [matrix] = get_indices_matrix(channels, M)
     %
     % @params
-    %     channels:     recording channel    
+    %     channels:     recording channel  
+    %            M:     PDC binary matrix with shape (N, N)
     % @return
-    %     left:         left channels' nodes ids
-    %     right:        right channels' nodes ids
+    %     matrix:       (N,N) Matrix with only edges in channels and rest 0
     %
-    [N_channels,M] = size(channels);
-    right = [];                 % list of ids of right hemisphere channels
-    left  = [];                 % list of ids of left hemisphere channels
-    for i=1:N_channels          % N=64
-        ch = channels(i,1:3);
-        tmp = ch-'0';
-        id  = tmp(find( tmp >= 0 & tmp < 10, 1 ));
-        
-        if mod(id,2)
-            right = [right,i]
-        else
-            left = [left,i]
+    matrix = zeros(64, 64);
+    indi = 1;
+    indj = 1;
+    for i=1:size(channels,2)
+        for j=1:size(channels,2)
+            matrix(channels(1,i),channels(1,j)) = M(channels(1,i),channels(1,j));
+            indj = indj+1;
         end
+        indi = indi+1;
+        indj = 1;
     end
 end
