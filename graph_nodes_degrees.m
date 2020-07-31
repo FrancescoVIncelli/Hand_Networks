@@ -14,29 +14,29 @@
 left =  [1, 2, 3, 8,  9,  10, 15, 16, 17, 22, 25, 26, 30, 31, 32, 33, 39, 41, 43, 45, 47, 48, 49, 50, 56, 57, 61];
 right = [5, 6, 7, 12, 13, 14, 19, 20, 21, 24, 28, 29, 35, 36, 37, 38, 40, 42, 44, 46, 52, 53, 54, 55, 59, 60, 63];
 
-[LHM_left_Hemis] = get_indices_matrix(left, LHM_PDC_Bin);
+[LHM_left_Hemis] =  get_indices_matrix(left, LHM_PDC_Bin);
 [LHM_right_Hemis] = get_indices_matrix(right, LHM_PDC_Bin);
 
-[LHI_left_Hemis] = get_indices_matrix(left, LHI_PDC_Bin);
+[LHI_left_Hemis] =  get_indices_matrix(left, LHI_PDC_Bin);
 [LHI_right_Hemis] = get_indices_matrix(right, LHI_PDC_Bin);
 
-[RHM_left_Hemis] = get_indices_matrix(left, RHM_PDC_Bin);
+[RHM_left_Hemis] =  get_indices_matrix(left, RHM_PDC_Bin);
 [RHM_right_Hemis] = get_indices_matrix(right, RHM_PDC_Bin);
 
-[RHI_left_Hemis] = get_indices_matrix(left, RHI_PDC_Bin);
+[RHI_left_Hemis] =  get_indices_matrix(left, RHI_PDC_Bin);
 [RHI_right_Hemis] = get_indices_matrix(right, RHI_PDC_Bin);
 
-LHM_L_Density = density_dir(LHM_left_Hemis);
-LHM_R_Density = density_dir(LHM_right_Hemis);
+LHM_L_Density = get_density_val(left, LHM_PDC_Bin);
+LHM_R_Density = get_density_val(right, LHM_PDC_Bin);
 
-LHI_L_Density = density_dir(LHI_left_Hemis);
-LHI_R_Density = density_dir(LHI_right_Hemis);
+LHI_L_Density = get_density_val(left, LHI_PDC_Bin);
+LHI_R_Density = get_density_val(right, LHI_PDC_Bin);
 
-RHM_L_Density = density_dir(RHM_left_Hemis);
-RHM_R_Density = density_dir(RHM_right_Hemis);
+RHM_L_Density = get_density_val(left, RHM_PDC_Bin);
+RHM_R_Density = get_density_val(right, RHM_PDC_Bin);
 
-RHI_L_Density = density_dir(RHI_left_Hemis);
-RHI_R_Density = density_dir(RHI_right_Hemis);
+RHI_L_Density = get_density_val(left, RHI_PDC_Bin);
+RHI_R_Density = get_density_val(right, RHI_PDC_Bin);
 
 %% Test function: [out_degrees, in_degrees, degrees] = compute_degrees(M)
 A = [0,1,1,0,0;
@@ -56,8 +56,8 @@ A = [0,1,1,0,0;
      0,1,0,0,0;
      1,1,0,0,0];
 
-channels = ['Fc2','Cp6','C8','C7','Fc5'];
-[left_density, right_density] = compute_hemispheres_density(A, channels)
+% channels = ['Fc2','Cp6','C8','C7','Fc5'];
+% [left_density, right_density] = compute_hemispheres_density(A, channels)
 
 
 
@@ -95,7 +95,7 @@ function [out_degrees, in_degrees, degrees] = compute_degrees(M)
 end
 
 
-%% Get nodes' ids for hemispheres distinction
+%% Get matrix for hemispheres based on channels
 
 function [matrix] = get_indices_matrix(channels, M)
     %
@@ -116,4 +116,26 @@ function [matrix] = get_indices_matrix(channels, M)
         indi = indi+1;
         indj = 1;
     end
+end
+
+%% Get density of specific channel
+    %
+    % @params
+    %     channels:     recording channel  
+    %            M:     PDC binary matrix with shape (N, N)
+    % @return
+    %      density:       Density of the computed matrix
+function [density] = get_density_val(channels, M)
+    matrix = zeros(size(channels,2), size(channels,2));
+    indi = 1;
+    indj = 1;
+    for i=1:size(channels,2)
+        for j=1:size(channels,2)
+            matrix(indi,indj) = M(channels(1,i),channels(1,j));
+            indj = indj+1;
+        end
+        indi = indi+1;
+        indj = 1;
+    end
+    density = density_dir(matrix);
 end
