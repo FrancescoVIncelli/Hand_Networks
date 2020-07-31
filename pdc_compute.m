@@ -6,6 +6,8 @@ warning off
 % Get data LHI, LHM, RHI, RHM
 run("dataset_load.m")
 
+%% PDC Computation
+
 [LHM_PDC] = pdc_computation(LHM);
 [LHI_PDC] = pdc_computation(LHI);
 [RHM_PDC] = pdc_computation(RHM);
@@ -35,6 +37,10 @@ RHI_PDC_Bin = RHI_PDC(:,:)<RHI_threshold;
 [LHI_Den, ~, ~] = density_dir(LHI_PDC_Bin);
 [RHM_Den, ~, ~] = density_dir(RHM_PDC_Bin);
 [RHI_Den, ~, ~] = density_dir(RHI_PDC_Bin);
+
+%% Topographical Representaion
+
+
 
 %% Time-invariant simulation for gOPDC analysis represented in ref [1] (Fig. 3)
 %%% Written by: Amir Omidvarnia, 2013
