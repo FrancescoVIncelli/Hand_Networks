@@ -4,6 +4,10 @@
 % c. left hemisphere density
 % d. right hemisphere density
 
+disp("----------------------------------------------------");
+disp("--------------Computing Local Indices---------------");
+disp("----------------------------------------------------");
+
 %% a-b)
 [LHM_out_degrees, LHM_in_degrees, LHM_degrees] = compute_degrees(LHM_PDC_Bin);
 [LHI_out_degrees, LHI_in_degrees, LHI_degrees] = compute_degrees(LHI_PDC_Bin);
@@ -38,23 +42,33 @@ RHM_R_Density = get_density_val(right, RHM_PDC_Bin);
 RHI_L_Density = get_density_val(left, RHI_PDC_Bin);
 RHI_R_Density = get_density_val(right, RHI_PDC_Bin);
 
-%% Test function: [out_degrees, in_degrees, degrees] = compute_degrees(M)
-A = [0,1,1,0,0;
-     0,0,0,1,0;
-     0,1,0,0,0;
-     0,1,0,0,0;
-     1,1,0,0,0];
+disp('Density Values are,');
+disp(['LHM Left Density: ', num2str(LHM_L_Density), ', Right Density: ', num2str(LHM_R_Density)]);
+disp(['LHI Left Density: ', num2str(LHI_L_Density), ', Right Density: ', num2str(LHI_R_Density)]);
+disp(['RHM Left Density: ', num2str(RHM_L_Density), ', Right Density: ', num2str(RHM_R_Density)]);
+disp(['RHI Left Density: ', num2str(RHI_L_Density), ', Right Density: ', num2str(RHI_R_Density)]);
 
-[out_degrees, in_degrees, degrees] = compute_degrees(A);
+disp("----------------------------------------------------");
+disp("--------Local Indices Computation Complete----------");
+disp("----------------------------------------------------");
+
+%% Test function: [out_degrees, in_degrees, degrees] = compute_degrees(M)
+% A = [0,1,1,0,0;
+%      0,0,0,1,0;
+%      0,1,0,0,0;
+%      0,1,0,0,0;
+%      1,1,0,0,0];
+% 
+% [out_degrees, in_degrees, degrees] = compute_degrees(A);
 
 
 
 %% Test function: [density] = compute_density(M)
-A = [0,1,1,0,0;
-     0,0,0,1,0;
-     0,1,0,0,0;
-     0,1,0,0,0;
-     1,1,0,0,0];
+% A = [0,1,1,0,0;
+%      0,0,0,1,0;
+%      0,1,0,0,0;
+%      0,1,0,0,0;
+%      1,1,0,0,0];
 
 % channels = ['Fc2','Cp6','C8','C7','Fc5'];
 % [left_density, right_density] = compute_hemispheres_density(A, channels)

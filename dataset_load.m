@@ -1,3 +1,4 @@
+disp("------------------Loading Dataset-------------------");
 
 % [hdr, data] = edfread("S004R07.edf");
 % [data, header] = ReadEDF("S004R07.edf");
@@ -10,6 +11,9 @@
 
 [LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6);
 
+disp("----------------------------------------------------");
+disp("--------------Loading Dataset Complete--------------");
+disp("----------------------------------------------------");
 function [LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6)
     [LHM3, RHM3] = split_data(data1,header1);
     [LHM7, RHM7] = split_data(data3,header3);

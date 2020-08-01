@@ -1,46 +1,51 @@
-clear
-clc
-close all
-warning off
-
-% Get data LHI, LHM, RHI, RHM
-run("dataset_load.m")
+disp('Parameter Initializations,');
+disp(['Choosen Frequency: ', num2str(freq)]);
+disp(['Choosen Network Density: ', num2str(density)]);
 
 %% PDC Computation
-
 [LHM_PDC] = pdc_computation(LHM);
 [LHI_PDC] = pdc_computation(LHI);
 [RHM_PDC] = pdc_computation(RHM);
 [RHI_PDC] = pdc_computation(RHI);
 
 %% Choose one of the frequency 
-freq = 13;
 LHM_PDC = LHM_PDC(:,:,freq);
 LHI_PDC = LHI_PDC(:,:,freq);
 RHM_PDC = RHM_PDC(:,:,freq);
 RHI_PDC = RHI_PDC(:,:,freq);
 
-
 %% Threshold and Weighted to Binary conversion with 20% Density 
-LHM_threshold = 0.0419;
-LHI_threshold = 0.0432;
-RHM_threshold = 0.0391;
-RHI_threshold = 0.0436;
+[LHM_PDC_Bin, LHM_threshold] = set_threshold(LHM_PDC, density);
+[LHI_PDC_Bin, LHI_threshold] = set_threshold(LHI_PDC, density);
+[RHM_PDC_Bin, RHM_threshold] = set_threshold(RHM_PDC, density);
+[RHI_PDC_Bin, RHI_threshold] = set_threshold(RHI_PDC, density);
 
-LHM_PDC_Bin = LHM_PDC(:,:)<LHM_threshold;
-LHI_PDC_Bin = LHI_PDC(:,:)<LHI_threshold;
-RHM_PDC_Bin = RHM_PDC(:,:)<RHM_threshold;
-RHI_PDC_Bin = RHI_PDC(:,:)<RHI_threshold;
+disp("-------------PDC Computation Complete---------------");
 
-% [kden,N,K] = density_dir(temp)
-[LHM_Den, ~, ~] = density_dir(LHM_PDC_Bin);
-[LHI_Den, ~, ~] = density_dir(LHI_PDC_Bin);
-[RHM_Den, ~, ~] = density_dir(RHM_PDC_Bin);
-[RHI_Den, ~, ~] = density_dir(RHI_PDC_Bin);
+disp('Threshold Values are,');
+disp(['LHM Threshold: ', num2str(LHM_threshold)]);
+disp(['LHI Threshold: ', num2str(LHI_threshold)]);
+disp(['RHM Threshold: ', num2str(RHM_threshold)]);
+disp(['RHI Threshold: ', num2str(RHI_threshold)]);
 
-%% Topographical Representaion
+%% Threshold set function
 
-
+function [bin_matrix, threshold] = set_threshold(data, dens)
+    threshold = 0.0;
+    count = 10000;
+    while 1
+        bin_matrix = data(:,:)<threshold;
+        [density, ~, ~] = density_dir(bin_matrix);       
+        if density >=dens
+            break
+        end
+        if count <= 0
+            error('Error: Stuck in loop in set_threshold function. Change the density range to a valid number');
+        end
+        count = count - 1;
+        threshold = threshold + 0.0001;
+    end
+end
 
 %% Time-invariant simulation for gOPDC analysis represented in ref [1] (Fig. 3)
 %%% Written by: Amir Omidvarnia, 2013
@@ -49,7 +54,7 @@ RHI_PDC_Bin = RHI_PDC(:,:)<RHI_threshold;
 %%% directed coherence,�  IEEE  Transactions on Biomedical Engineering, 2013  [Epub ahead of print]
 
 function [PDC] = pdc_computation(data)
-    disp("PDC Computation");
+    disp("----------------PDC Computation---------------------");
     % Time-invariant MVAR model 
     Fs = 160; % Sampling frequency
     Fmax = Fs/2; % Cut off frequency (Hz), should be smaller than Fs/2
