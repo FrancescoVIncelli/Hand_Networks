@@ -7,7 +7,7 @@ warning off
 % Frequency from 1 - 64;
 freq = 13;
 % Set Network Density for threshold calcualation
-density = 0.05;
+density = 0.20;
 
 %% Get data LHI, LHM, RHI, RHM
 run("dataset_load.m")

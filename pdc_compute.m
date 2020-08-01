@@ -29,14 +29,13 @@ disp(['RHM Threshold: ', num2str(RHM_threshold)]);
 disp(['RHI Threshold: ', num2str(RHI_threshold)]);
 
 %% Threshold set function
-
 function [bin_matrix, threshold] = set_threshold(data, dens)
     threshold = 0.0;
     count = 10000;
     while 1
-        bin_matrix = data(:,:)<threshold;
-        [density, ~, ~] = density_dir(bin_matrix);       
-        if density >=dens
+        bin_matrix = data(:,:)>threshold;
+        [density, ~, ~] = density_dir(bin_matrix);      
+        if density <= dens+0.01
             break
         end
         if count <= 0
@@ -44,6 +43,10 @@ function [bin_matrix, threshold] = set_threshold(data, dens)
         end
         count = count - 1;
         threshold = threshold + 0.0001;
+    end
+    
+    for i = 1:size(bin_matrix,1)
+        bin_matrix(i,i) = 0;
     end
 end
 
