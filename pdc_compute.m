@@ -1,32 +1,26 @@
-disp('Parameter Initializations,');
-disp(['Choosen Frequency: ', num2str(freq)]);
-disp(['Choosen Network Density: ', num2str(density)]);
+function [PDC, PDC_Bin, threshold] = pdc_compute(data, freq, density)
+
+% disp("----------------PDC Computation---------------------");
+
+% disp('Parameter Initializations,');
+% disp(['Choosen Frequency: ', num2str(freq)]);
+% disp(['Choosen Network Density: ', num2str(density)]);
 
 %% PDC Computation
-[LHM_PDC] = pdc_computation(LHM);
-[LHI_PDC] = pdc_computation(LHI);
-[RHM_PDC] = pdc_computation(RHM);
-[RHI_PDC] = pdc_computation(RHI);
+[PDC] = pdc_computation(data);
 
 %% Choose one of the frequency 
-LHM_PDC = LHM_PDC(:,:,freq);
-LHI_PDC = LHI_PDC(:,:,freq);
-RHM_PDC = RHM_PDC(:,:,freq);
-RHI_PDC = RHI_PDC(:,:,freq);
+PDC = PDC(:,:,freq);
 
 %% Threshold and Weighted to Binary conversion with 20% Density 
-[LHM_PDC_Bin, LHM_threshold] = set_threshold(LHM_PDC, density);
-[LHI_PDC_Bin, LHI_threshold] = set_threshold(LHI_PDC, density);
-[RHM_PDC_Bin, RHM_threshold] = set_threshold(RHM_PDC, density);
-[RHI_PDC_Bin, RHI_threshold] = set_threshold(RHI_PDC, density);
+[PDC_Bin, threshold] = set_threshold(PDC, density);
 
-disp("-------------PDC Computation Complete---------------");
+% disp("-------------PDC Computation Complete---------------");
 
-disp('Threshold Values are,');
-disp(['LHM Threshold: ', num2str(LHM_threshold)]);
-disp(['LHI Threshold: ', num2str(LHI_threshold)]);
-disp(['RHM Threshold: ', num2str(RHM_threshold)]);
-disp(['RHI Threshold: ', num2str(RHI_threshold)]);
+% disp('Threshold Values are,');
+% disp(['LHM Threshold: ', num2str(threshold)]);
+
+end
 
 %% Threshold set function
 function [bin_matrix, threshold] = set_threshold(data, dens)
@@ -56,7 +50,6 @@ end
 %%% Normalization fourmula by : Astolfi et al, 2007
 
 function [PDC] = pdc_computation(data)
-    disp("----------------PDC Computation---------------------");
     % Time-invariant MVAR model 
     Fs = 160; % Sampling frequency
     Fmax = Fs/2; % Cut off frequency (Hz), should be smaller than Fs/2
@@ -77,7 +70,6 @@ function [PDC] = pdc_computation(data)
 
     [PDC] = get_pdc(A,C,p_opt,Fs,Fmax,Nf);    
     
-    PDC = abs(PDC);
 end
 
 function [PDC] = get_pdc(A,C,p_opt,Fs,Fmax,Nf)
@@ -123,4 +115,6 @@ function [PDC] = get_pdc(A,C,p_opt,Fs,Fmax,Nf)
             PDC(:,:,n,t)  = (A_f.*A_f)./a_denum(ones(1,CH),:); % (|Aij|^2) / (sum of m=1 to CH (|Aim|^2))
         end
     end
+    PDC = abs(PDC);
 end
+
