@@ -1,4 +1,5 @@
-disp("------------------Loading Dataset-------------------");
+function [LHM_data, LHI_data, RHM_data, RHI_data, hdr] = dataset_load()
+% disp("------------------Loading Dataset-------------------");
 
 % [hdr, data] = edfread("S004R07.edf");
 % [data, header] = ReadEDF("S004R07.edf");
@@ -9,11 +10,10 @@ disp("------------------Loading Dataset-------------------");
 [data5,header5] =  lab_read_edf("Dataset/S001R11.edf");
 [data6,header6] =  lab_read_edf("Dataset/S001R12.edf");
 
-[LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6);
+hdr = header1;
 
-disp("----------------------------------------------------");
-disp("--------------Loading Dataset Complete--------------");
-disp("----------------------------------------------------");
+[LHM_data, RHM_data, LHI_data, RHI_data] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6);
+
 function [LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6)
     [LHM3, RHM3] = split_data(data1,header1);
     [LHM7, RHM7] = split_data(data3,header3);
@@ -53,4 +53,5 @@ function [left_records, right_records] = split_data(data,header)
     end
 end
 
+end
 

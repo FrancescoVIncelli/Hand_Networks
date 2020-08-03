@@ -1,60 +1,28 @@
 %% Plot Graphs
-disp("----------------------------------------------------");
-disp("------------Topographical Representaion-------------");
-disp("----------------------------------------------------");
+function [graph, L_graph, R_graph] = graph_compute(PDC_Bin, CH, left_Hemis, right_Hemis, header)
+
+% disp("-----------------Get Graph Diagram------------------");
 
 % Load positions of nodes obtained from the image
 load('nodePos.mat')
-names = transpose(cellstr(header1.channels));
+names = transpose(cellstr(header.channels(1:CH,:)));
 
-% A = randn(4,4); A = A(:,:)<0.5; A(1,1)=0; A(2,2)=0; A(3,3)=0; A(4,4)=0;
-
-% Graphs for 64 channels
-[s, t] = get_edges_nodes(LHM_PDC_Bin);
+% Graphs
+[s, t] = get_edges_nodes(PDC_Bin);
 weights = zeros(1,size(s, 2));
-LHM_graph = digraph(s,t, weights, names);
-
-[s, t] = get_edges_nodes(LHI_PDC_Bin);
-weights = zeros(1,size(s, 2));
-LHI_graph = digraph(s,t, weights, names);
-
-[s, t] = get_edges_nodes(RHM_PDC_Bin);
-weights = zeros(1,size(s, 2));
-RHM_graph = digraph(s,t, weights, names);
-
-[s, t] = get_edges_nodes(RHI_PDC_Bin);
-weights = zeros(1,size(s, 2));
-RHI_graph = digraph(s,t, weights, names);
+graph = digraph(s,t, weights, names);
 
 % Graphs for Left and Right Hemisphere
-[s, t] = get_edges_nodes(LHM_left_Hemis);
+[s, t] = get_edges_nodes(left_Hemis);
 weights = zeros(1,size(s, 2));
-LHM_L_graph = digraph(s,t, weights, names);
-[s, t] = get_edges_nodes(LHM_right_Hemis);
+L_graph = digraph(s,t, weights, names);
+[s, t] = get_edges_nodes(right_Hemis);
 weights = zeros(1,size(s, 2));
-LHM_R_graph = digraph(s,t, weights, names);
+R_graph = digraph(s,t, weights, names);
 
-[s, t] = get_edges_nodes(LHI_left_Hemis);
-weights = zeros(1,size(s, 2));
-LHI_L_graph = digraph(s,t, weights, names);
-[s, t] = get_edges_nodes(LHI_right_Hemis);
-weights = zeros(1,size(s, 2));
-LHI_R_graph = digraph(s,t, weights, names);
+end
 
-[s, t] = get_edges_nodes(RHM_left_Hemis);
-weights = zeros(1,size(s, 2));
-RHM_L_graph = digraph(s,t, weights, names);
-[s, t] = get_edges_nodes(RHM_right_Hemis);
-weights = zeros(1,size(s, 2));
-RHM_R_graph = digraph(s,t, weights, names);
-
-[s, t] = get_edges_nodes(RHI_left_Hemis);
-weights = zeros(1,size(s, 2));
-RHI_L_graph = digraph(s,t, weights, names);
-[s, t] = get_edges_nodes(RHI_right_Hemis);
-weights = zeros(1,size(s, 2));
-RHI_R_graph = digraph(s,t, weights, names);
-
+%%
 function [s, t] = get_edges_nodes(A)
     s = [];
     t = [];
