@@ -50,11 +50,10 @@ function [bin_matrix, threshold] = set_threshold(data, dens)
     end
 end
 
-%% Time-invariant simulation for gOPDC analysis represented in ref [1] (Fig. 3)
-%%% Written by: Amir Omidvarnia, 2013
-%%% Ref [1]: A.  Omidvarnia,  G.  Azemi,  B.  Boashash,  J.  O.  Toole,  P.  Colditz,  and  S.  Vanhatalo, 
-%%% �Measuring  time-varying  information  flow  in  scalp  EEG  signals:  orthogonalized  partial 
-%%% directed coherence,�  IEEE  Transactions on Biomedical Engineering, 2013  [Epub ahead of print]
+%% PDC Computation using Orthogonalized Partial Directed Coherence Toolbox 
+%%% Written by : Amir Omidvarnia, 2013
+%%% Modefied by : Akshay Dhonthi, 2020
+%%% Normalization fourmula by : Astolfi et al, 2007
 
 function [PDC] = pdc_computation(data)
     disp("----------------PDC Computation---------------------");
@@ -67,10 +66,61 @@ function [PDC] = pdc_computation(data)
     L = size(y,1); % Number of samples
     CH = size(y,2); % Number of channels
 
+    %%% Written by: Amir Omidvarnia, 2013
+    %%% Ref [1]: A.  Omidvarnia,  G.  Azemi,  B.  Boashash,  J.  O.  Toole,  P.  Colditz,  and  S.  Vanhatalo, 
+    %%% �Measuring  time-varying  information  flow  in  scalp  EEG  signals:  orthogonalized  partial 
+    %%% directed coherence,�  IEEE  Transactions on Biomedical Engineering, 2013  [Epub ahead of print]
+
     % Time-invariant MVAR parameter estimation
-    [w, A, C, sbc, fpe, th] = arfit(y, 1, 20, 'sbc'); % ---> ARFIT toolbox
-    [tmp,p_opt] = min(sbc); % Optimum order for the MVAR model
-    % Connectivity measures (PDC, gOPDC etc)
-    [GPDC,OPDC,PDC,GOPDC,S] = PDC_dDTF_imag(A,C,p_opt,Fs,Fmax,Nf);
+    [~, A, C, sbc, ~, ~] = arfit(y, 1, 20, 'sbc'); % ---> ARFIT toolbox
+    [~,p_opt] = min(sbc); % Optimum order for the MVAR model
+
+    [PDC] = get_pdc(A,C,p_opt,Fs,Fmax,Nf);    
+    
     PDC = abs(PDC);
+end
+
+function [PDC] = get_pdc(A,C,p_opt,Fs,Fmax,Nf)
+    %% Written by: Amir Omidvarnia
+    %%% Please see also the functions provided in BioSig Toolbox
+    %%% (available at: http://biosig.sourceforge.net)
+    % A = [A1 A2 ... Ap]
+    % Nf: Number of frequency points
+    % Fmax: maximum frequency limit (should be less than Fs/2)
+    [CH,~,T] = size(A);
+    PDC   = zeros(CH,CH,Nf,T); % Orthogonalized Partial Directed Coherence
+
+    S   = zeros(CH,CH,Nf,T); % Partial Directed Coherence
+    f = (0:Nf-1)*(Fmax/Nf); % Frequency span
+    z = 1i*2*pi/Fs;
+
+    for t = 1 : T % Number of time points
+        clear A2 
+        A2 = [eye(CH) -squeeze(A(:,:,t))];
+
+        C_tmp = squeeze(C(:,:,t));
+        Cd = diag(diag(C_tmp)); % Cd is useful for calculation of DC
+        invCd = abs(inv(Cd));% invCd is useful for calculation of GPDC
+        if(sum(sum(isinf(invCd)))>0)
+            invCd = zeros(CH);
+        end
+        for n = 1 : Nf
+            A_f = zeros(CH);
+            for k = 1 : p_opt+1
+                A_f = A_f + (A2(:,k*CH+(1-CH:0))*exp(z*(k-1)*f(n))); % sum(Ar(f)), r=0:p --> A(f) (if B==I)
+            end
+
+            H_f = inv(A_f);
+
+            % Power Spectral Density matrix
+            S(:,:,n,t) = (H_f * C_tmp * H_f');
+
+            % Normalization ( Astolfi et al, 2007 )
+            for ii = 1:CH
+                a_ii = squeeze(A_f(:,ii)); % ii'th column of A(f) --> ak
+                a_denum(ii) = (a_ii'*a_ii);
+            end
+            PDC(:,:,n,t)  = (A_f.*A_f)./a_denum(ones(1,CH),:); % (|Aij|^2) / (sum of m=1 to CH (|Aim|^2))
+        end
+    end
 end
