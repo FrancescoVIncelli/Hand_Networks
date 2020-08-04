@@ -4,7 +4,7 @@ function [graph, L_graph, R_graph] = graph_compute(PDC_Bin, CH, left_Hemis, righ
 % disp("-----------------Get Graph Diagram------------------");
 
 % Load positions of nodes obtained from the image
-load('nodePos.mat')
+load(fullfile('..','data','nodePos.mat'))
 names = transpose(cellstr(header.channels(1:CH,:)));
 
 % Graphs

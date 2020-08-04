@@ -3,12 +3,12 @@ function [LHM_data, LHI_data, RHM_data, RHI_data, hdr] = dataset_load()
 
 % [hdr, data] = edfread("S004R07.edf");
 % [data, header] = ReadEDF("S004R07.edf");
-[data1,header1] =  lab_read_edf("Dataset/S001R03.edf");
-[data2,header2] =  lab_read_edf("Dataset/S001R04.edf");
-[data3,header3] =  lab_read_edf("Dataset/S001R07.edf");
-[data4,header4] =  lab_read_edf("Dataset/S001R08.edf");
-[data5,header5] =  lab_read_edf("Dataset/S001R11.edf");
-[data6,header6] =  lab_read_edf("Dataset/S001R12.edf");
+[data1,header1] =  lab_read_edf(fullfile('..','data','S001R03.edf'));
+[data2,header2] =  lab_read_edf(fullfile('..','data','S001R04.edf'));
+[data3,header3] =  lab_read_edf(fullfile('..','data','S001R07.edf'));
+[data4,header4] =  lab_read_edf(fullfile('..','data','S001R08.edf'));
+[data5,header5] =  lab_read_edf(fullfile('..','data','S001R11.edf'));
+[data6,header6] =  lab_read_edf(fullfile('..','data','S001R12.edf'));
 
 hdr = header1;
 

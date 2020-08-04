@@ -5,19 +5,18 @@ warning off
 
 %% Initialize Parameters
 % Frequency from 1 - 64;
+freq1 = 13;
+freq2 = 16;
 % Set Network Density for threshold calcualation
+density = 0.10;
 % Load positions of nodes obtained from the image
-load('nodePos.mat')
+load(fullfile('..','data','nodePos.mat'))
 
 %% Get data LHI, LHM, RHI, RHM
 % run("dataset_load.m")
 [samples_LHM, samples_LHI, samples_RHM, samples_RHI, header] = dataset_load();
 
 %% Initialize Parameters and Run the routine (Data_Load + PDC_Computation + Local and Global Indices + Graphs)
-density = 0.20;
-freq1 = 13;
-freq2 = 15;
-
 % Channels set to 64
 channels = 64;
 [LHM_CH_64_f1] = run_routine(samples_LHM, header, channels, freq1, density, 'LHM');
@@ -47,8 +46,12 @@ channels = 21;
 [RHI_CH_21_f2] = run_routine(samples_RHI, header, channels, freq2, density, 'RHI');
 
 %% Plot Graphs
-plot_brain(LHM_CH_64_f1.graph, x_values, y_values, 'Left Hand Actual Movement');    
-plot_brain(LHM_CH_21_f1.graph, x_values, y_values, 'Right Hand Actual Movement');    
+% plot_brain(LHM_CH_64_f1.graph, x_values, y_values, 'Left Hand Actual Movement');    
+plot_brain(LHM_CH_21_f1.graph, x_values, y_values, 'Left Hand Actual Movement');    
+plot_brain(RHM_CH_21_f1.graph, x_values, y_values, 'Right Hand Actual Movement');    
+
+plot_brain(LHI_CH_21_f1.graph, x_values, y_values, 'Left Hand Imagination');    
+plot_brain(RHI_CH_21_f1.graph, x_values, y_values, 'Right Hand Imagination');    
 
 disp("------------------End of Analysis-------------------");
 

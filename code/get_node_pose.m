@@ -1,7 +1,7 @@
 %% Read Node Points from an image 
 %%% Written by: Akshay Dhonthi, 2020
 
-pts = readPoints('electrode_pos.JPG', 21);
+pts = readPoints(fullfile('..','auxilary','electrode_pos.JPG'), 21);
 
 function pts = readPoints(image, n)
     % @params
