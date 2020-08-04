@@ -59,9 +59,11 @@ function [s] = run_routine(samples, header, channels, freq, density, str)
     [PDC, PDC_Bin, threshold] = pdc_compute(samples(:,1:channels) , freq, density);
 
     %% Compute Degrees and Density
-%     run("graph_nodes_degrees.m")
     [out_degrees, in_degrees, degrees, left_Hemis, right_Hemis, L_Density, R_Density] = graph_nodes_degrees(PDC_Bin, channels);
     
+    %% Compute Global and Local Efficiency
+    [distance_matrix, global_efficiency] = efficiency(PDC_Bin);
+        
     %% Plot Graphs
     [graph, L_graph, R_graph] = graph_compute(PDC_Bin, channels, left_Hemis, right_Hemis, header);
     
@@ -70,13 +72,19 @@ function [s] = run_routine(samples, header, channels, freq, density, str)
     s.PDC = PDC;
     s.PDC_Bin = PDC_Bin;
     s.Threshold = threshold;
+    
     s.In_degrees = in_degrees;
 	s.Out_degrees = out_degrees;
     s.Degrees = degrees;
+    
     s.Left_Hemisphere = left_Hemis;
     s.Right_Hemisphere = right_Hemis;    
     s.Left_Hemis_Density = L_Density;
     s.Right_Hemis_Density = R_Density;
+    
+    s.distance_matrix = distance_matrix;
+    s.global_efficiency = global_efficiency;
+    
     s.graph = graph;
     s.Left_Hemis_Graph = L_graph;
     s.Right_Hemis_Graph = R_graph;
