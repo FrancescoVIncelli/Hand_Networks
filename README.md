@@ -1,4 +1,4 @@
-## Hand Networks
+# Hand Networks
 **Characterization of brain networks subtending movement execution and  movement imagination**
 
 This project uses EEG signals acquired during the execution and imagination of the left- and right-hand movement is analyzed to build the networks subtending each task and compare their different properties in terms of organization, structure, and local indices.
@@ -52,7 +52,7 @@ This project perfroms a sequence of steps as shown below
 2. The dataset is loaded using [dataset_load.m](code/dataset_load.m) script
 3. The pixel positions for plotting the graph is loaded which is stored as a `.mat` file using [get_node_pose.m](code/get_node_pose.m) script 
 4. The `run_routine` function is called multiple times by changing the dataset, frequecny and number of channels which performs a series of steps
-   1. Computes MVAR model and Partial Directed Coherence. One frequency which is choosen from the obtained 3D matrics and converted to binary matrix with given density
+   1. Computes Multi-Variate Autoregressive model and then Partial Directed Coherence to obtain a 3D matrics. One frequency is choosen from the 3D matrics and converted to binary matrix by setting a threshold to obtain given density
    2. Computes the local indices (in-degree, out-degree, degree, left and right hemisphere density)
    3. Computes the global indices (global efficiency and local efficiency)
    4. Computes the graph (edges and nodes) for plotting the graph
