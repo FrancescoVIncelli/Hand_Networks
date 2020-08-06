@@ -1,7 +1,7 @@
 %% AIM 2.2 - Compute binary global (Global and Local Efficiency) graph indices in the four conditions. (LHM, RHM, LHI, RHI)
 
 %%
-function [distance_matrix, global_efficiency, local_efficiency] = efficiency(PDC_Bin)
+function [distance_matrix, global_efficiency, local_efficiency_avg, local_efficiency_all] = efficiency(PDC_Bin)
     %%  Compute distance matrices
     distance_matrix = distances(digraph(PDC_Bin));
 
@@ -9,7 +9,7 @@ function [distance_matrix, global_efficiency, local_efficiency] = efficiency(PDC
     global_efficiency = Global_Efficiency(distance_matrix);
 
 	%%  Compute binary Local Efficiency values
-    local_efficiency = Local_Efficiency(PDC_Bin);
+    [local_efficiency_avg, local_efficiency_all] = Local_Efficiency(PDC_Bin);
 end
 
 
@@ -36,7 +36,7 @@ end
 
 %%  function Subnetwork for Local Efficiency
 
-function [Average]  = Local_Efficiency(M)
+function [Average,values]  = Local_Efficiency(M)
 %     disp("_____________Computing Subnet & Local Efficiency_____________");
     [rows, cols] = size(M); 
     N=rows;
