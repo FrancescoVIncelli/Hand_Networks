@@ -33,6 +33,7 @@ channels = 64;
 
 % Channels set to 21
 channels = 21;
+
 [LHM_CH_21_f1] = run_routine(samples_LHM, header, channels, freq1, density, 'LHM');
 [LHM_CH_21_f2] = run_routine(samples_LHM, header, channels, freq2, density, 'LHM');
 
@@ -47,11 +48,14 @@ channels = 21;
 
 %% Plot Graphs
 % plot_brain(LHM_CH_64_f1.graph, x_values, y_values, 'Left Hand Actual Movement');    
-plot_brain(LHM_CH_21_f1.graph, x_values, y_values, 'Left Hand Actual Movement');    
-plot_brain(RHM_CH_21_f1.graph, x_values, y_values, 'Right Hand Actual Movement');    
 
-plot_brain(LHI_CH_21_f1.graph, x_values, y_values, 'Left Hand Imagination');    
-plot_brain(RHI_CH_21_f1.graph, x_values, y_values, 'Right Hand Imagination');    
+% UNCOMMENT - BEGIN
+% plot_brain(LHM_CH_21_f1.graph, x_values, y_values, 'Left Hand Actual Movement');    
+% plot_brain(RHM_CH_21_f1.graph, x_values, y_values, 'Right Hand Actual Movement');    
+% 
+% plot_brain(LHI_CH_21_f1.graph, x_values, y_values, 'Left Hand Imagination');    
+% plot_brain(RHI_CH_21_f1.graph, x_values, y_values, 'Right Hand Imagination');    
+% UNCOMMENT - END
 
 disp("------------------End of Analysis-------------------");
 
@@ -65,7 +69,7 @@ function [s] = run_routine(samples, header, channels, freq, density, str)
     [out_degrees, in_degrees, degrees, left_Hemis, right_Hemis, L_Density, R_Density] = graph_nodes_degrees(PDC_Bin, channels);
     
     %% Compute Global and Local Efficiency
-    [distance_matrix, global_efficiency, local_efficiency] = efficiency(PDC_Bin);
+    [distance_matrix, global_efficiency, local_efficiency_avg, local_efficiency_all] = efficiency(PDC_Bin);
         
     %% Plot Graphs
     [graph, L_graph, R_graph] = graph_compute(PDC_Bin, channels, left_Hemis, right_Hemis, header);
@@ -87,7 +91,8 @@ function [s] = run_routine(samples, header, channels, freq, density, str)
     
     s.distance_matrix = distance_matrix;
     s.global_efficiency = global_efficiency;
-    s.local_efficiency = local_efficiency;
+    s.local_efficiency_avg = local_efficiency_avg;
+    s.local_efficiency_all = local_efficiency_all;
     
     s.graph = graph;
     s.Left_Hemis_Graph = L_graph;
