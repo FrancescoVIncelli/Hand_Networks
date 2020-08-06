@@ -10,7 +10,10 @@ The EEG data are available from [PhysioNet](https://physionet.org/content/eegmmi
 - The scripts are compaitable with MATLAB 2020a
 - The toolboxes required to successfully run the project on PC are shown below. These can be directly downloaded from MATLAB Add-On Explorer using their names.
 	- [Read / Write EDF+-Files](https://www.mathworks.com/matlabcentral/fileexchange/36530-read-write-edf-files)
+	- [ARfit](https://www.mathworks.com/matlabcentral/fileexchange/174-arfit)
 	- [Orthogonalized Partial Directed Coherence](https://www.mathworks.com/matlabcentral/fileexchange/45223-orthogonalized-partial-directed-coherence-measuring-time-varying-interactions-within-eeg-channels)
+	- [Topographic EEG/MEG plot](https://www.mathworks.com/matlabcentral/fileexchange/72729-topographic-eeg-meg-plot)
+
 - Clone the entire repository in a specific path in the PC or in MATLAB online
 - The repository already contains the datasets of an individual. To add different test samples, add in the [data](data/) directory. Make sure to edit the [dataset_load.m](code/dataset_load.m) script to use different dataset. The code snippet to edit is shown below. 
 ```objective-c
