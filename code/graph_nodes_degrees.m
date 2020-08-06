@@ -5,9 +5,21 @@
 % d. right hemisphere density
 
 function [out_degrees, in_degrees, degrees, left_Hemis, right_Hemis, L_Density, R_Density] = graph_nodes_degrees(PDC_Bin, channels)
-
-% disp("--------------Computing Local Indices---------------");
-
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %         PDC_Bin:      Binary PDC Matrix
+    %        channels:      Number of channels (64 or 21)
+    % @return
+    %     out_degrees:      Out degrees of each node
+    %      in_degrees:      In degrees of each node
+    %         degrees:      Degrees of each node
+    %      left_Hemis:      Left Hemisphere matrix
+    %     right_Hemis:      Right Hemisphere matrix
+    %       L_Density:      Left Hemisphere Density
+    %       R_Density:      Left Hemisphere Density
+    %
+    
 %% a-b)
 [out_degrees, in_degrees, degrees] = compute_degrees(PDC_Bin);
 
@@ -28,38 +40,12 @@ end
 L_Density = get_density_val(left, PDC_Bin);
 R_Density = get_density_val(right, PDC_Bin);
 
-% disp('Density Values are,');
-% disp(['LHM Left Density: ', num2str(L_Density), ', Right Density: ', num2str(R_Density)]);
-
-% disp("--------Local Indices Computation Complete----------");
-
 end
-%% Test function: [out_degrees, in_degrees, degrees] = compute_degrees(M)
-% A = [0,1,1,0,0;
-%      0,0,0,1,0;
-%      0,1,0,0,0;
-%      0,1,0,0,0;
-%      1,1,0,0,0];
-% 
-% [out_degrees, in_degrees, degrees] = compute_degrees(A);
-
-
-
-%% Test function: [density] = compute_density(M)
-% A = [0,1,1,0,0;
-%      0,0,0,1,0;
-%      0,1,0,0,0;
-%      0,1,0,0,0;
-%      1,1,0,0,0];
-
-% channels = ['Fc2','Cp6','C8','C7','Fc5'];
-% [left_density, right_density] = compute_hemispheres_density(A, channels)
-
-
 
 %% Degree of graph's nodes
 
 function [out_degrees, in_degrees, degrees] = compute_degrees(M)
+    %%% Written by : Francesco Vincelli
     %
     % @params
     %     M:            PDC binary matrix with shape (N, N)
@@ -94,6 +80,7 @@ end
 %% Get matrix for hemispheres based on channels
 
 function [matrix] = get_indices_matrix(channels, M)
+    %%% Written by : Francesco Vincelli
     %
     % @params
     %     channels:     recording channel  
@@ -115,13 +102,17 @@ function [matrix] = get_indices_matrix(channels, M)
 end
 
 %% Get density of specific channel
+
+function [density] = get_density_val(channels, M)
+    %%% Written by : Francesco Vincelli
     %
     % @params
     %     channels:     recording channel  
     %            M:     PDC binary matrix with shape (N, N)
     % @return
     %      density:       Density of the computed matrix
-function [density] = get_density_val(channels, M)
+    %
+    
     matrix = zeros(size(channels,2), size(channels,2));
     indi = 1;
     indj = 1;

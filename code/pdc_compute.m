@@ -1,29 +1,39 @@
 function [PDC, PDC_Bin, threshold] = pdc_compute(data, freq, density)
+    %%% Written by : Akshay Dhonthi
+	%     
+    % @params
+    %         data:      Samples obtained from the patients
+    %         freq:      The choosen frequency to get results 
+    %      density:      The density required to set threshold
+    % @return
+    %          PDC:      Partial Directed Coherence of a frequency value
+    %      PDC_Bin:      Binary PDC matrix after applying threshold
+    %    threshold:      Threshold value of the specified density
+    %
+    
+    %% PDC Computation
+    [PDC] = pdc_computation(data);
 
-% disp("----------------PDC Computation---------------------");
+    %% Choose one of the frequency 
+    PDC = PDC(:,:,freq);
 
-% disp('Parameter Initializations,');
-% disp(['Choosen Frequency: ', num2str(freq)]);
-% disp(['Choosen Network Density: ', num2str(density)]);
-
-%% PDC Computation
-[PDC] = pdc_computation(data);
-
-%% Choose one of the frequency 
-PDC = PDC(:,:,freq);
-
-%% Threshold and Weighted to Binary conversion with 20% Density 
-[PDC_Bin, threshold] = set_threshold(PDC, density);
-
-% disp("-------------PDC Computation Complete---------------");
-
-% disp('Threshold Values are,');
-% disp(['LHM Threshold: ', num2str(threshold)]);
+    %% Threshold and Weighted to Binary conversion with 20% Density 
+    [PDC_Bin, threshold] = set_threshold(PDC, density);
 
 end
 
 %% Threshold set function
 function [bin_matrix, threshold] = set_threshold(data, dens)
+    %%% Written by : Akshay Dhonthi
+	%     
+    % @params
+    %         data:      NXN PDC matrix after choosing one frequency
+    %         dens:      The density to which the threshold to be set
+    %
+    % @return
+    %   bin_matrix:      Binary PDC matrix after applying threshold
+    %    threshold:      Threshold value of the specified density
+    %
     threshold = 0.0;
     count = 10000;
     while 1
@@ -50,6 +60,14 @@ end
 %%% Normalization fourmula by : Astolfi et al, 2007
 
 function [PDC] = pdc_computation(data)
+	%     
+    % @params
+    %         data:      Samples obtained from the patients
+    %
+    % @return
+    %          PDC:      Partial Directed Coherence
+    %
+    
     % Time-invariant MVAR model 
     Fs = 160; % Sampling frequency
     Fmax = Fs/2; % Cut off frequency (Hz), should be smaller than Fs/2
@@ -74,8 +92,14 @@ end
 
 function [PDC] = get_pdc(A,C,p_opt,Fs,Fmax,Nf)
     %% Written by: Amir Omidvarnia
+    %%% Modified by: Akshay Dhonthi
     %%% Please see also the functions provided in BioSig Toolbox
     %%% (available at: http://biosig.sourceforge.net)
+    %
+    % @return
+    %          PDC:      Partial Directed Coherence after normalization
+    %    
+    
     % A = [A1 A2 ... Ap]
     % Nf: Number of frequency points
     % Fmax: maximum frequency limit (should be less than Fs/2)

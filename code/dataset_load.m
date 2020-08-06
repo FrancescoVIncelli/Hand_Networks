@@ -1,20 +1,41 @@
 function [LHM_data, LHI_data, RHM_data, RHI_data, hdr] = dataset_load()
-% disp("------------------Loading Dataset-------------------");
+    %%% Written by : Akshay Dhonthi
+	%     
+    % @params
+    %
+    % @return
+    %     LHM_data:      Left Hand Moment Data
+    %     LHI_data:      Left Hand Imagination Data
+    %     RHM_data:      Right Hand Moment Data
+    %     RHI_data:      Right Hand Imagination Data
+    %          hdr:      Header
+    %
+    
+    [data1,header1] =  lab_read_edf(fullfile('..','data','S001R03.edf'));
+    [data2,header2] =  lab_read_edf(fullfile('..','data','S001R04.edf'));
+    [data3,header3] =  lab_read_edf(fullfile('..','data','S001R07.edf'));
+    [data4,header4] =  lab_read_edf(fullfile('..','data','S001R08.edf'));
+    [data5,header5] =  lab_read_edf(fullfile('..','data','S001R11.edf'));
+    [data6,header6] =  lab_read_edf(fullfile('..','data','S001R12.edf'));
 
-% [hdr, data] = edfread("S004R07.edf");
-% [data, header] = ReadEDF("S004R07.edf");
-[data1,header1] =  lab_read_edf(fullfile('..','data','S001R03.edf'));
-[data2,header2] =  lab_read_edf(fullfile('..','data','S001R04.edf'));
-[data3,header3] =  lab_read_edf(fullfile('..','data','S001R07.edf'));
-[data4,header4] =  lab_read_edf(fullfile('..','data','S001R08.edf'));
-[data5,header5] =  lab_read_edf(fullfile('..','data','S001R11.edf'));
-[data6,header6] =  lab_read_edf(fullfile('..','data','S001R12.edf'));
+    hdr = header1;
 
-hdr = header1;
-
-[LHM_data, RHM_data, LHI_data, RHI_data] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6);
+    [LHM_data, RHM_data, LHI_data, RHI_data] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6);
 
 function [LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header1,header2,header3,header4,header5,header6)
+    %%% Written by : Francesco Peracchia
+	%     
+    % @params
+    %        datan:      multiple edf data that is to be merged
+    %      headern:      multiple headers which is used to split the data 
+    %
+    % @return
+    %     LHM_data:      Left Hand Moment Data
+    %     LHI_data:      Left Hand Imagination Data
+    %     RHM_data:      Right Hand Moment Data
+    %     RHI_data:      Right Hand Imagination Data
+    %          hdr:      Header
+    %
     [LHM3, RHM3] = split_data(data1,header1);
     [LHM7, RHM7] = split_data(data3,header3);
     [LHM11, RHM11] = split_data(data5,header5);
@@ -30,6 +51,16 @@ function [LHM, RHM, LHI, RHI] = Merge(data1,data2,data3,data4,data5,data6,header
 end
 
 function [left_records, right_records] = split_data(data,header)
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %        data:       samples that is to be split into left/right hand
+    %      header:       intervals to split the data
+    %
+    % @return
+    %      left_records:      Left Hand Samples
+    %     right_records:      Right Hand Samples
+    %
     pos_list = header.events.POS;
     typ_list = header.events.TYP;
     left_records = [];
