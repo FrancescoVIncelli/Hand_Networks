@@ -5,15 +5,15 @@ warning off
 
 %% Initialize Parameters
 % Frequency from 1 - 64;
-freq1 = 13;
-freq2 = 16;
+freq1 = 14;
+freq2 = 15;
 % Set Network Density for threshold calcualation
 density = 0.10;
 % Load positions of nodes obtained from the image
 load(fullfile('..','data','nodePos.mat'))
 
 %% Get data samples LHI, LHM, RHI, RHM
-[samples_LHM, samples_LHI, samples_RHM, samples_RHI, header] = dataset_load();
+[samples_LHM, samples_RHM, samples_LHI, samples_RHI, header] = dataset_load();
 
 %% Initialize Parameters and Run the routine (Data_Load + PDC_Computation + Local and Global Indices + Graphs)
 % Channels set to 64
