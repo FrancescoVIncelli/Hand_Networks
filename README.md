@@ -27,6 +27,7 @@ hand_networks/
 ├── README.md                   - Installation and execution procedures, description of code modules and ouput
 ├── data/
 │   ├── nodePos.mat             - Contains the pixel positions of the electrodes used to plot graph 
+│   ├── locations.mat           - Contains the variables for measurement systems of 64 channel data format
 │   ├── S001R03.edf             - Contains dataset of open and close left or right fist (LHM, RHM)
 │   ├── S001R04.edf             - Contains dataset of imagine opening and closing left or right fist (LHI, RHI)
 │   ├── S001R07.edf             - Contains dataset of open and close left or right fist (LHM, RHM)
@@ -49,7 +50,7 @@ hand_networks/
 │   ├── plot_degrees.m		- This script plots the degrees of each electrode position in the form of table
 │   ├── plot_degrees_hists.m	- This script plots the degrees in the form of a bar graph 
 │   ├── plot_density.m		- This script plots the densities in the form of a bar graph
-│   ├── plot_efficiency.m	- This script plots the efficiency in the form of topographical representation
+│   └── plot_efficiency.m	- This script plots the efficiency in the form of topographical representation
 │
 ├── auxiliary/
 │   └── electrode_pos.JPG       - The image which is used to get the pixel position (obtained from PhusioNet)
