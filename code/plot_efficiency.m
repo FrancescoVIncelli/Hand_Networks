@@ -208,13 +208,28 @@ function multiple_maps(data,args, ch_list)
         idx=0;
         len=size(plotTitle,2)/2;
         for i=1:n_plots
-            subplot(1,2,i)
+            ha(i) = subplot(1,2,i)
             efficiency_map(data(i), ch_list);
 
             % Set plot title
             plt_title = plotTitle(1,len*idx+1:len*(idx+1));
             title(plt_title);
             idx=idx+1;
+        end
+        
+        %  dim = [.2 .5 .3 .3];
+        %  str = sprintf('(Average) Local Efficiency: %s || GLobal Efficiency: %s',data.local_efficiency_avg, data.global_efficiency);
+        %  annotation('textbox',dim,'String',str,'FitBoxToText','on');
+        arrayfun(@(x) pbaspect(x, [1 1 1]), ha);
+        drawnow;
+        
+        pos = arrayfun(@plotboxpos, ha, 'uni', 0);
+        dim = cellfun(@(x) x.*[1 0.5 1 1], pos, 'uni',0);
+        for ia=1:n_plots
+            str = sprintf(...
+                '(Average) Local Efficiency: %s || GLobal Efficiency: %s',...
+                data(ia).local_efficiency_avg, data(ia).global_efficiency);
+            annotation(fig, 'textbox',  dim{ia}, 'String', str, 'vert', 'bottom', 'FitBoxToText','on');
         end
     elseif n_plots==4
         idx=0;
