@@ -1,11 +1,6 @@
 %% Topographical Plots Efficiency Indices
 %%% Francesco Vincelli, 2020
 warning off
-    
-% lev=LHM_CH_64_f1.local_efficiency_all;
-% plot_topography(ch_list,lev,1,locs_filename);
-% figure()
-% title("NEW Topogaphical Plot");
 
 % Load channels locations system file
 % locs_filename=fullfile('..','data','locations.mat');
@@ -22,83 +17,160 @@ ch_list_64 = {'FC5','FC3','FC1','FCZ','FC2','FC4','FC6','C5','C3','C1','CZ',...
 ch_list_21 = {'FC5','FC3','FC1','FCZ','FC2','FC4','FC6','C5','C3',...
     'C1','CZ','C2','C4','C6','CP5','CP3','CP1','CPZ','CP2','CP4','CP6'};
 
-    
-%% Group datasets to be ploted
-LHM_64_data = [LHM_CH_64_f1, LHM_CH_64_f2];
-LHM_21_data = [LHM_CH_21_f1, LHM_CH_21_f2];
-LHI_64_data = [LHI_CH_64_f1, LHI_CH_64_f2];
-LHI_21_data = [LHI_CH_21_f1, LHI_CH_21_f2];
-RHM_64_data = [RHM_CH_64_f1, RHM_CH_64_f2];
-RHM_21_data = [RHM_CH_21_f1, RHM_CH_21_f2];
-RHI_64_data = [RHI_CH_64_f1, RHI_CH_64_f2];
-RHI_21_data = [RHI_CH_21_f1, RHI_CH_21_f2];
+
+%% Group data for graphical comparison %%
+
+%% Left Hand Execution/Imagination Movement Comparisons
+LeftHand_CH_64_f1 = [LHM_CH_64_f1, LHI_CH_64_f1];
+LeftHand_CH_64_f2 = [LHM_CH_64_f2, LHI_CH_64_f2];
+LeftHand_CH_21_f1 = [LHM_CH_21_f1, LHI_CH_21_f1];
+LeftHand_CH_21_f2 = [LHM_CH_21_f2, LHI_CH_21_f2];
+
+
+%% Right Hand Execution/Imagination Movement Comparisons
+RightHand_CH_64_f1 = [RHM_CH_64_f1, RHI_CH_64_f1];
+RightHand_CH_64_f2 = [RHM_CH_64_f2, RHI_CH_64_f2];
+RightHand_CH_21_f1 = [RHM_CH_21_f1, RHI_CH_21_f1];
+RightHand_CH_21_f2 = [RHM_CH_21_f2, RHI_CH_21_f2];
+
+%% Left-Right Execution Movement Comparisons
+LR_Exec_CH_64_f1 = [LHM_CH_64_f1, RHM_CH_64_f1];
+LR_Exec_CH_64_f2 = [LHM_CH_64_f2, RHM_CH_64_f2];
+LR_Exec_CH_21_f1 = [LHM_CH_21_f1, RHM_CH_21_f1];
+LR_Exec_CH_21_f2 = [LHM_CH_21_f2, RHM_CH_21_f2];
+
+%% Left-Right Imagination Movement Comparisons
+LR_Imag_CH_64_f1 = [LHI_CH_64_f1, RHI_CH_64_f1];
+LR_Imag_CH_64_f2 = [LHI_CH_64_f2, RHI_CH_64_f2];
+LR_Imag_CH_21_f1 = [LHI_CH_21_f1, RHI_CH_21_f1];
+LR_Imag_CH_21_f2 = [LHI_CH_21_f2, RHI_CH_21_f2];
+
 
 %% Set plottings arguments
 
-% Left Hand Movement
-keys_LHM_64={'plotType','freqs','channels','compare','figureName'};
-values_LHM_64=["multiple","f1_f2","64","frequency","Left Hand Movement"];
-args_LHM_64=containers.Map(keys_LHM_64,values_LHM_64);
+%% Left Hand Execution/Imagination Movement Comparisons
 
-keys_LHM_21={'plotType','freqs','channels','compare','figureName'};
-values_LHM_21=["multiple","f1_f2","21","frequency","Left Hand Movement"];
-args_LHM_21=containers.Map(keys_LHM_21,values_LHM_21);
+keys_LH_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LH_Ch64_f1=["multiple","f1","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_LH_Ch64_f1=containers.Map(keys_LH_Ch64_f1,values_LH_Ch64_f1);
 
-% Left Hand Imagination
-keys_LHI_64={'plotType','freqs','channels','compare','figureName'};
-values_LHI_64=["multiple","f1_f2","64","frequency","Left Hand Imagination"];
-args_LHI_64=containers.Map(keys_LHI_64,values_LHI_64);
+keys_LH_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LH_Ch64_f2=["multiple","f2","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_LH_Ch64_f2=containers.Map(keys_LH_Ch64_f2,values_LH_Ch64_f2);
 
-keys_LHI_21={'plotType','freqs','channels','compare','figureName'};
-values_LHI_21=["multiple","f1_f2","21","frequency","Left Hand Imagination"];
-args_LHI_21=containers.Map(keys_LHI_21,values_LHI_21);
+keys_LH_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+values_LH_Ch21_f1=["multiple","f1","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_LH_Ch21_f1=containers.Map(keys_LH_Ch21_f1,values_LH_Ch21_f1);
 
-% Right Hand Movement
-keys_RHM_64={'plotType','freqs','channels','compare','figureName',};
-values_RHM_64=["multiple","f1_f2","64","frequency","Right Hand Movement"];
-args_RHM_64=containers.Map(keys_RHM_64,values_RHM_64);
+keys_LH_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LH_Ch21_f2=["multiple","f2","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_LH_Ch21_f2=containers.Map(keys_LH_Ch21_f2,values_LH_Ch21_f2);
 
-keys_RHM_21={'plotType','freqs','channels','compare','figureName',};
-values_RHM_21=["multiple","f1_f2","21","frequency","Right Hand Movement"];
-args_RHM_21=containers.Map(keys_RHM_21,values_RHM_21);
 
-% Right Hand Imagination
-keys_RHI_64={'plotType','freqs','channels','compare','figureName'};
-values_RHI_64=["multiple","f1_f2","64","frequency","Right Hand Imagination"];
-args_RHI_64=containers.Map(keys_RHI_64,values_RHI_64);
+%% Right Hand Execution/Imagination Movement Comparisons
 
-keys_RHI_21={'plotType','freqs','channels','compare','figureName'};
-values_RHI_21=["multiple","f1_f2","21","frequency","Right Hand Imagination"];
-args_RHI_21=containers.Map(keys_RHI_64,values_RHI_21);
+keys_RH_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_RH_Ch64_f1=["multiple","f1","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_RH_Ch64_f1=containers.Map(keys_RH_Ch64_f1,values_RH_Ch64_f1);
+
+keys_RH_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_RH_Ch64_f2=["multiple","f2","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_RH_Ch64_f2=containers.Map(keys_RH_Ch64_f2,values_RH_Ch64_f2);
+
+keys_RH_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+values_RH_Ch21_f1=["multiple","f1","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_RH_Ch21_f1=containers.Map(keys_RH_Ch21_f1,values_RH_Ch21_f1);
+
+keys_RH_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_RH_Ch21_f2=["multiple","f2","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+args_RH_Ch21_f2=containers.Map(keys_RH_Ch21_f2,values_RH_Ch21_f2);
+
+
+%% Left\Right Hand Execution Movement Comparisons
+
+keys_LRM_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LRM_Ch64_f1=["multiple","f1","64","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
+args_LRM_Ch64_f1=containers.Map(keys_LRM_Ch64_f1,values_LRM_Ch64_f1);
+
+keys_LRM_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LRM_Ch64_f2=["multiple","f2","64","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
+args_LRM_Ch64_f2=containers.Map(keys_LRM_Ch64_f2,values_LRM_Ch64_f2);
+
+keys_LRM_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+values_LRM_Ch21_f1=["multiple","f1","21","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
+args_LRM_Ch21_f1=containers.Map(keys_LRM_Ch21_f1,values_LRM_Ch21_f1);
+
+keys_LRM_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LRM_Ch21_f2=["multiple","f2","21","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
+args_LRM_Ch21_f2=containers.Map(keys_LRM_Ch21_f2,values_LRM_Ch21_f2);
+
+
+%% Left\Right Hand Imagination Movement Comparisons
+
+keys_LRI_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LRI_Ch64_f1=["multiple","f1","64","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
+args_LEI_Ch64_f1=containers.Map(keys_LRI_Ch64_f1,values_LRI_Ch64_f1);
+
+keys_LRI_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LRI_Ch64_f2=["multiple","f2","64","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
+args_LRI_Ch64_f2=containers.Map(keys_LRI_Ch64_f2,values_LRI_Ch64_f2);
+
+keys_LRI_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+values_LRI_Ch21_f1=["multiple","f1","21","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
+args_LRI_Ch21_f1=containers.Map(keys_LRI_Ch21_f1,values_LRI_Ch21_f1);
+
+keys_LRI_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
+values_LRI_Ch21_f2=["multiple","f2","21","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
+args_LRI_Ch21_f2=containers.Map(keys_LRI_Ch21_f2,values_LRI_Ch21_f2);
+
 
 %% Plot Efficiency Maps
-efficiency_plots(LHM_64_data, args_LHM_64, ch_list_64);
-efficiency_plots(LHM_21_data, args_LHM_21, ch_list_21);
-pause(0.5)
-efficiency_plots(LHI_64_data, args_LHI_64, ch_list_64);
-efficiency_plots(LHI_21_data, args_LHI_21, ch_list_21);
-pause(0.5)
-efficiency_plots(RHM_64_data, args_RHM_64, ch_list_64);
-efficiency_plots(RHM_21_data, args_RHM_21, ch_list_21);
-pause(0.5)
-efficiency_plots(RHI_64_data, args_RHI_64, ch_list_64);
-efficiency_plots(RHI_21_data, args_RHI_21, ch_list_21);
+
+% %% Left Hand Execution/Imagination Movement
+% efficiency_plots(LeftHand_CH_64_f1, args_LH_Ch64_f1, ch_list_64);
+% efficiency_plots(LeftHand_CH_64_f2, args_LH_Ch64_f2, ch_list_64);
+% pause(0.5)
+% efficiency_plots(LeftHand_CH_21_f1, args_LH_Ch21_f1, ch_list_21);
+% efficiency_plots(LeftHand_CH_21_f2, args_LH_Ch21_f2, ch_list_21);
+% 
+% %% Right Hand Execution/Imagination Movement
+% efficiency_plots(RightHand_CH_64_f1, args_RH_Ch64_f1, ch_list_64);
+% efficiency_plots(RightHand_CH_64_f2, args_RH_Ch64_f2, ch_list_64);
+% pause(0.5);
+% efficiency_plots(RightHand_CH_21_f1, args_RH_Ch21_f1, ch_list_21);
+% efficiency_plots(RightHand_CH_21_f2, args_RH_Ch21_f2, ch_list_21);
+
+%% Left\Right Hand Execution Movement
+efficiency_plots(LR_Exec_CH_64_f1, args_LRM_Ch64_f1, ch_list_64);
+efficiency_plots(LR_Exec_CH_64_f2, args_LRM_Ch64_f2, ch_list_64);
+%pause(0.5)
+efficiency_plots(LR_Exec_CH_21_f1, args_LRM_Ch21_f1, ch_list_21);
+efficiency_plots(LR_Exec_CH_21_f2, args_LRM_Ch21_f1, ch_list_21);
+
+%% Left\Right Hand Imagination Movement
+efficiency_plots(LR_Imag_CH_64_f1, args_LRI_Ch64_f1, ch_list_64);
+efficiency_plots(LR_Imag_CH_64_f2, args_LRI_Ch64_f1, ch_list_64);
+%pause(0.5)
+efficiency_plots(LR_Imag_CH_21_f1, args_LRI_Ch21_f1, ch_list_21);
+efficiency_plots(LR_Imag_CH_21_f2, args_LRI_Ch21_f1, ch_list_21);
+
 
 function efficiency_plots(data, args, ch_list)
     plotType=args('plotType');
     freqs=args('freqs');
     channels=args('channels');
     compare=args('compare');
+    dataIds=args('dataIds'); ids=strsplit(dataIds,'_');
     figureName=args('figureName');
     
     pltKeys={'plotTitle','windowName','windowState','numPlots'};
     
     switch compare
-        case 'frequency'
-            fs=strsplit(freqs,'_');
-            windowName=sprintf("%s: Efficiency Indices || Channels: %s | Frequencies: (%s - %s)",figureName, channels,fs{1},fs{2});
-            plotTitle=['Global/Local Efficiency | Frequency: f1=13',...
-                'Global/Local Efficiency | Frequency: f1=16'];
+        case "left-right"
+            windowName=sprintf("%s: Efficiency Indices || Channels: %s | Frequencies: %s",figureName, channels, freqs);
+            plotTitle=[sprintf('%s Global/Local Efficiency', ids{1}),...
+                sprintf('%s Global/Local Efficiency', ids{2})];
+                
             numPlots=2;
             windowState='maximized';
             
@@ -106,36 +178,19 @@ function efficiency_plots(data, args, ch_list)
             pltArgs=containers.Map(pltKeys,pltValues);
             multiple_maps(data,pltArgs, ch_list);
         
-        case 'channels'
-            fs=strsplit(freqs,'_');
-            chs = strsplit(channels,'_');
-            if size(fs,2)==1
-                windowName=sprintf("%s: Efficiency Indices || Channels: %s | Frequencies: (%s - %s)",figureName, channels,fs{1},fs{2});
-                plotTitle=['Global/Local Efficiency | Channels: 64',...
-                    'Global/Local Efficiency | Channels: 21'];
-                numPlots=2;
-                windowState='maximized';
+        case "exec-imag"
+            windowName=sprintf("%s: Efficiency Indices || Channels: %s | Frequencies: %s",figureName, channels,freqs);
+            plotTitle=[sprintf('%s Global/Local Efficiency', ids{1}),...
+                sprintf('%s Global/Local Efficiency', ids{2})];
 
-                pltValues=[plotTitle,windowName,windowState,numPlots];
-                pltArgs=containers.Map(pltKeys,pltValues);
-                multiple_maps(data,pltArgs, ch_list);
-            elseif size(fs,2)==2
-                windowName=sprintf("%s: Efficiency Indices || Channels: %s | Frequencies: (%s - %s)",figureName, channels,fs{1},fs{2});
-                plotTitle=['Out/In/Tot-Degrees | Ch: 64 | f1=13',...
-                    'Global/Local Efficiency | Ch: 64 | f2=16',...
-                    'Global/Local Efficiency | Ch: 21 | f1=13',...
-                    'Global/Local Efficiency | Ch: 21 | f2=16'];
-                numPlots=4;
-                windowState='maximized';
+            numPlots=2;
+            windowState='maximized';
 
-                pltValues=[plotTitle,windowName,windowState,numPlots];
-                pltArgs=containers.Map(pltKeys,pltValues);
-                multiple_maps(data,pltArgs, ch_list);
-            end
+            pltValues=[plotTitle,windowName,windowState,numPlots];
+            pltArgs=containers.Map(pltKeys,pltValues);
+            multiple_maps(data,pltArgs, ch_list);
     end
-            
-            
-            
+         
 end
 
 function multiple_maps(data,args, ch_list)
