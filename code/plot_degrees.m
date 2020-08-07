@@ -1,13 +1,12 @@
-%% Plot table of graph's degrees
-%%% Francesco Vincelli, 2020
+%% AIM3 - Plot tables of graphs' degrees
 
-%function plot_degrees()
 
 %% Group datasets to be ploted
 LHM_data = [LHM_CH_64_f1, LHM_CH_64_f2, LHM_CH_21_f1, LHM_CH_21_f2];
 LHI_data = [LHI_CH_64_f1, LHI_CH_64_f2, LHI_CH_21_f1, LHI_CH_21_f2];
 RHM_data = [RHM_CH_64_f1, RHM_CH_64_f2, RHM_CH_21_f1, RHM_CH_21_f2];
 RHI_data = [RHI_CH_64_f1, RHI_CH_64_f2, RHI_CH_21_f1, RHI_CH_21_f2];
+
 
 %% Set plottings arguments
 
@@ -31,6 +30,7 @@ keys_RHI={'plotType','freqs','channels','compare','figureName'};
 values_RHI=["multiple","f1_f2","64_21","channels","Right Hand Imagination"];
 args_RHI=containers.Map(keys_RHI,values_RHI);
 
+
 %% Plot tables
 degrees_tables(LHM_data, args_LHM);
 pause(0.5)
@@ -41,6 +41,17 @@ pause(0.5)
 degrees_tables(RHI_data, args_RHI);
 
 function degrees_tables(data,args)
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %         data:      List of Binary PDC Matrices
+    %         args:      Plotting arguments in a containers.Map format
+    %                    Map(keysSet, valuesSet)
+    % @return
+    %         Combinations of table plots for listing and comparisons of
+    %         Degrees indices for the input data
+    %
+    
     plotType=args('plotType');
     freqs=args('freqs');
     channels=args('channels');
@@ -50,6 +61,7 @@ function degrees_tables(data,args)
     pltKeys={'plotTitle','windowName','windowState','numPlots'};
     
     switch compare
+        % Compare data grouping by frequency band
         case 'frequency'
             fs=strsplit(freqs,'_');
             windowName=sprintf("%s: nodes'degrees || Channels: %s | Frequencies: (%s - %s)",figureName, channels,fs{1},fs{2});
@@ -62,6 +74,7 @@ function degrees_tables(data,args)
             pltArgs=containers.Map(pltKeys,pltValues);
             multiple_table(data,pltArgs);
         
+        % Compare data grouping by channels
         case 'channels'
             fs=strsplit(freqs,'_');
             chs = strsplit(channels,'_');
@@ -96,6 +109,16 @@ end
 
 
 function multiple_table(data,args)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:     List of PDC binary matrices
+    %         args:     Plotting argument for graphic and writing
+    %                   formatting
+    % @return
+    %         Manages multiple tabular subplots in a single figure
+    %
+    
     % Get plot arguments
     windowName=args('windowName');
     windowState=args('windowState');
@@ -125,7 +148,7 @@ function multiple_table(data,args)
             set(uit,'position',pos);
 
             % Set plot title
-            plt_title = plotTitle(1,len*idx+1:len*(idx+1))
+            plt_title = plotTitle(1,len*idx+1:len*(idx+1));
             title(plt_title);
             idx=idx+1;
         end
@@ -149,7 +172,7 @@ function multiple_table(data,args)
             set(uit,'position',pos);
 
             % Set plot title
-            plt_title = plotTitle(1,len*idx+1:len*(idx+1))
+            plt_title = plotTitle(1,len*idx+1:len*(idx+1));
             title(plt_title);
             idx=idx+1;
         end
@@ -157,6 +180,16 @@ function multiple_table(data,args)
 end
 
 function single_table(data,args)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:     List of PDC binary matrices
+    %         args:     Plotting argument for graphic and writing
+    %                   formatting
+    % @return
+    %         Suitable formatting of tabular plot using plotting arguments
+    %         in 'args' input parameter
+    %
     
     % Get plot arguments
     windowName=args('windowName');
@@ -185,6 +218,16 @@ function single_table(data,args)
 end
 
 function t = degs_table(data)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:   PDC binary matrix
+    
+    % @return
+    %         Plot a table containing In/Out/Total nodes' degrees for the
+    %         input data
+    %
+    
     degs = data.Degrees;
     in_degs = data.In_degrees;
     out_degs = data.Out_degrees;
