@@ -1,5 +1,6 @@
 %% AIM 2.2 - Compute binary global (Global and Local Efficiency) graph indices in the four conditions. (LHM, RHM, LHI, RHI)
-
+   %%% Written by : Francesco Peracchia
+	
 %%
 function [distance_matrix, global_efficiency, local_efficiency_avg, local_efficiency_all] = efficiency(PDC_Bin)
     %%  Compute distance matrices
@@ -54,7 +55,7 @@ function [Average,values]  = Local_Efficiency(M)
         C(i,:)=[];
         C(:,i)=[];
         %disp(C);
-        %disp("Sono da rimuovere gli attuali indici in queste posizioni:")
+       
        
         for k=1:length(A)
             if i<A(k)
@@ -75,7 +76,7 @@ function [Average,values]  = Local_Efficiency(M)
         end
 
         C=distances(digraph(C));
-%         disp("matrice delle distanze");
+%         disp("Distances Matrix");
 %         disp(C);
         T=Global_Efficiency(C);        
         if isnan(T)
