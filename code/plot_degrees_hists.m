@@ -1,46 +1,52 @@
-%% Plot table of graph's degrees
-%%% Francesco Vincelli, 2020
+%% AIM3 - Plot Histograms of graph's degrees
 
 
-%% Right Hand Execution\Imagination Movement
+%% Set plottings arguments
+
+keys_CH_args={'plotType','channels','freqs','compare','figureName','degs'};
+
+values_CH64=["multiple","64","13_16","exec-imag","Hand Movement Execution/Imagination","tot"];
+args_CH64=containers.Map(keys_CH_args,values_CH64);
+
+values_CH21=["multiple","21","13_16","exec-imag","Hand Movement Execution/Imagination","tot"];
+args_CH21=containers.Map(keys_CH_args,values_CH21);
+
+keys_FS_args={'plotType','channels','freqs','compare','figureName','dataIds','degs'};
+
+values_LRM=["multiple","64_21","13_16","left-right","Left\Right Hand Movement Execution","LRM","tot"];
+args_LRM=containers.Map(keys_FS_args,values_LRM);
+
+values_LRI=["multiple","64_21","13_16","left-right","Left\Right Hand Imagination Movement","LRI","tot"];
+args_LRI=containers.Map(keys_FS_args,values_LRI);
+
+
+%% Right-Hand Execution\Imagination Movement
 data_CH64=[[LHM_CH_64_f1,LHI_CH_64_f1],
            [RHM_CH_64_f1,RHI_CH_64_f1],
            [LHM_CH_64_f2,LHI_CH_64_f2],
            [RHM_CH_64_f2,RHI_CH_64_f2]];
       
-keys_CH64={'plotType','channels','freqs','compare','figureName','degs'};
-values_CH64=["multiple","64","13_16","exec-imag","Hand Movement Execution/Imagination","tot"];
-args_CH64=containers.Map(keys_CH64,values_CH64);
 
-%% Left Hand Execution\Imagination Movement
+%% Left-Hand Execution\Imagination Movement
 data_CH21=[[LHM_CH_21_f1,LHI_CH_21_f1],
            [RHM_CH_21_f1,RHI_CH_21_f1],
            [LHM_CH_21_f2,LHI_CH_21_f2],
            [RHM_CH_21_f2,RHI_CH_21_f2]];
-  
-keys_CH21={'plotType','channels','freqs','compare','figureName','degs'};
-values_CH21=["multiple","21","13_16","exec-imag","Hand Movement Execution/Imagination","tot"];
-args_CH21=containers.Map(keys_CH21,values_CH21);
 
-%% Left\Right Execution Movement
+
+%% Left\Right-Hand Execution Movement
 data_LRM=[[LHM_CH_64_f1,RHM_CH_64_f1],
           [LHM_CH_64_f2,RHM_CH_64_f2],
           [LHM_CH_21_f1,RHM_CH_21_f1],
           [LHM_CH_21_f2,RHM_CH_21_f2]];
   
-keys_LRM={'plotType','channels','freqs','compare','figureName','dataIds','degs'};
-values_LRM=["multiple","64_21","13_16","left-right","Left\Right Hand Movement Execution","LRM","tot"];
-args_LRM=containers.Map(keys_LRM,values_LRM);
 
-%% Left\Right Imagination Movement
+%% Left\Right-Hand Imagination Movement
 data_LRI=[[LHI_CH_64_f1,RHI_CH_64_f1],
           [LHI_CH_64_f2,RHI_CH_64_f2],
           [LHI_CH_21_f1,RHI_CH_21_f1],
           [LHI_CH_21_f2,RHI_CH_21_f2]];
   
-keys_LRI={'plotType','channels','freqs','compare','figureName','dataIds','degs'};
-values_LRI=["multiple","64_21","13_16","left-right","Left\Right Hand Imagination Movement","LRI","tot"];
-args_LRI=containers.Map(keys_LRI,values_LRI);
 
 %% Plots
 degrees_bargraphs(data_CH64,args_CH64);
@@ -51,7 +57,20 @@ degrees_bargraphs(data_LRI,args_LRI);
 pause(0.5);
 degrees_bargraphs(data_LRM,args_LRM);
 
+
 function degrees_bargraphs(data,args)
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %         data:      List of Binary PDC Matrices
+    %         args:      Plotting arguments in a containers.Map format
+    %                    Map(keysSet, valuesSet)
+    % @return
+    %         Combinations of Degrees indices histogram plots for
+    %         comparison among the input data
+    %
+    
+    % Collect plotting arguments
     plotType=args('plotType');
     compare=args('compare');
     figureName=args('figureName');
@@ -101,6 +120,16 @@ function degrees_bargraphs(data,args)
 end
 
 function multiple_degs_bargraphs(data,args)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:     List of PDC binary matrices
+    %         args:     Plotting argument for graphic and writing
+    %                   formatting
+    % @return
+    %         Manages multiple bar graphs subplots in a single figure
+    %
+    
     % Get plot arguments
     plotTitle=args('plotTitle');
     n_plots = str2num(args('numPlots'));
@@ -110,7 +139,7 @@ function multiple_degs_bargraphs(data,args)
     for i=1:n_plots
         % Set plot title
         plt_title = sprintf("%s",plotTitle(1,len*idx+1:len*(idx+1)));
-        disp(plt_title);
+        % disp(plt_title);
         args('plotTitle')=plt_title;
         degrees_bars_comp(data(i,:),args);
 
@@ -119,6 +148,17 @@ function multiple_degs_bargraphs(data,args)
 end
 
 function b = degrees_bars_comp(data,args)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:     List of PDC binary matrices
+    %         args:     Plotting argument for graphic and writing
+    %                   formatting
+    % @return
+    %            b: Bar graph comparing the degree indices for two input
+    %               data
+    %
+    
     % Get plot arguments
     windowName = args('windowName');
     windowState = args('windowState');
@@ -127,6 +167,7 @@ function b = degrees_bars_comp(data,args)
     compare=args('compare');
     
     % Collect data
+    % Choose among in/out/total degree indices
     switch degs
         case 'in'
             d1  = data(1).In_degrees;
@@ -173,7 +214,14 @@ function b = degrees_bars_comp(data,args)
     title(plt_title);
 end
 
-function b = density_bars(data)
+function b = degree_barplot(data)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %        data:   PDC binary matrix with shape (N, N)
+    % @return
+    %           b:   Bar graph of Degrees indices for input data
+    %
     
     % Collect data
     dens_L = data.Left_Hemis_Density;
