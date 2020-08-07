@@ -1,55 +1,54 @@
-%% Density plots
+%% AIM3 - Left and Right Hemispheres Density plots
+
+%% Set plottings arguments
+keysSet={'plotType','freqs','channels','compare','figureName',};
 
 
-%dataset = [LHM_CH_64_f1, LHM_CH_21_f1];
-%density_bars(LHM_CH_64_f1);
+%% 64-channels Data
+valuesCH64=["multiple","13_16","64","frequency","Hand Movement Execution/Imagination"];
+argsCH64=containers.Map(keysSet,valuesCH64);
 
-%keys={'windowName','windowState','plotTitle','numPlots'}
+%% 21-channels Data
+valuesCH21=["multiple","13_16","21","frequency","Hand Movement Execution/Imagination"];
+argsCH21=containers.Map(keysSet,valuesCH21);
 
-keys={'plotType','freqs','channels','compare','figureName','dataIds'};
-%values=["multiple","13_16","64","frequency","Hand Movement Execution/Imagination"];
-values=["multiple","13_16","64_21","channels","Hand Movement Execution/Imagination","LHM_RHM"];
-args=containers.Map(keys,values);
+%% f1 Frequency Band Data (f1=13)
+valuesFs13=["multiple","13","64_21","channels","Hand Movement Execution/Imagination"];
+argsFs13=containers.Map(keysSet,valuesFs13);
 
-%% All 64-Channels data
+%% f2 Frequency Band Data (f2=16)
+valuesFs16=["multiple","16","64_21","channels","Hand Movement Execution/Imagination"];
+argsFs16=containers.Map(keysSet,valuesFs16);
+
+
+%% Collecting data
+
+%% 64-channels Data
 dataCH64=[[LHM_CH_64_f1,LHM_CH_64_f2],
           [RHM_CH_64_f1,RHM_CH_64_f2],
           [LHI_CH_64_f1,LHI_CH_64_f2],
           [RHI_CH_64_f1,RHI_CH_64_f2]];
       
-keysCH64={'plotType','freqs','channels','compare','figureName',};
-valuesCH64=["multiple","13_16","64","frequency","Hand Movement Execution/Imagination"];
-argsCH64=containers.Map(keysCH64,valuesCH64);
-
-%% All 21-Channels data
+%% 21-Channels Data
 dataCH21=[[LHM_CH_21_f1,LHM_CH_21_f2],
           [RHM_CH_21_f1,RHM_CH_21_f2],
           [LHI_CH_21_f1,LHI_CH_21_f2],
           [RHI_CH_21_f1,RHI_CH_21_f2]];
   
-keysCH21={'plotType','freqs','channels','compare','figureName'};
-valuesCH21=["multiple","13_16","21","frequency","Hand Movement Execution/Imagination"];
-argsCH21=containers.Map(keysCH21,valuesCH21);
 
-%% All f1-Frequency data (f1=13)
+%% f1 Frequency Band Data (f1=13)
 dataFs13=[[LHM_CH_64_f1,LHM_CH_21_f1],
           [RHM_CH_64_f1,RHM_CH_21_f1],
           [LHI_CH_64_f1,LHI_CH_21_f1],
           [RHI_CH_64_f1,RHI_CH_21_f1]];
   
-keysFs13={'plotType','freqs','channels','compare','figureName'};
-valuesFs13=["multiple","13","64_21","channels","Hand Movement Execution/Imagination"];
-argsFs13=containers.Map(keysFs13,valuesFs13);
 
-%% All f2-Frequency data (f2=16)
+%% f2 Frequency Band Data (f2=16)
 dataFs16=[[LHM_CH_64_f2,LHM_CH_21_f2],
           [RHM_CH_64_f2,RHM_CH_21_f2],
           [LHI_CH_64_f2,LHI_CH_21_f2],
           [RHI_CH_64_f2,RHI_CH_21_f2]];
   
-keysFs16={'plotType','freqs','channels','compare','figureName'};
-valuesFs16=["multiple","16","64_21","channels","Hand Movement Execution/Imagination"];
-argsFs16=containers.Map(keysFs16,valuesFs16);
 
 %% Plots
 density_bargraphs(dataCH64,argsCH64);
@@ -60,7 +59,20 @@ density_bargraphs(dataFs13,argsFs13);
 pause(0.5);
 density_bargraphs(dataFs16,argsFs16);
 
+
 function density_bargraphs(data,args)
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %         data:      List of Binary PDC Matrices
+    %         args:      Plotting arguments in a containers.Map format
+    %                    Map(keysSet, valuesSet)
+    % @return
+    %         Combinations of multiple Bar graphs plots for comparison of 
+    %         density indices for the input data
+    %
+    
+    % Collect plotting arguments
     plotType=args('plotType');
     freqs=args('freqs');
     channels=args('channels');
@@ -70,6 +82,7 @@ function density_bargraphs(data,args)
     pltKeys={'plotTitle','windowName','windowState','numPlots','compare'};
     
     switch compare
+        % Compare grouping by frequency band
         case 'frequency'
             fs=strsplit(freqs,'_');
             chs=strsplit(channels,'_');
@@ -83,7 +96,7 @@ function density_bargraphs(data,args)
                 windowState='maximized';
 
                 pltValues=[plotTitle,windowName,windowState,numPlots,compare];
-                size(pltValues)
+                
                 pltArgs=containers.Map(pltKeys,pltValues);
                 multiple_bargraphs(data,pltArgs);
                 
@@ -99,11 +112,12 @@ function density_bargraphs(data,args)
                 windowState='maximized';
 
                 pltValues=[plotTitle,windowName,windowState,numPlots,compare];
-                size(pltValues)
+                
                 pltArgs=containers.Map(pltKeys,pltValues);
                 multiple_bargraphs(data,pltArgs);
             end
-        
+            
+        % Compare grouping by channels
         case 'channels'
             fs=strsplit(freqs,'_');
             chs = strsplit(channels,'_');
@@ -117,7 +131,7 @@ function density_bargraphs(data,args)
                 windowState='maximized';
 
                 pltValues=[plotTitle,windowName,windowState,numPlots,compare];
-                size(pltValues)
+                
                 pltArgs=containers.Map(pltKeys,pltValues);
                 multiple_bargraphs(data,pltArgs);
             elseif size(fs,2)==2
@@ -132,7 +146,7 @@ function density_bargraphs(data,args)
                 windowState='maximized';
 
                 pltValues=[plotTitle,windowName,windowState,numPlots,compare];
-                size(pltValues)
+                
                 pltArgs=containers.Map(pltKeys,pltValues);
                 multiple_bargraphs(data,pltArgs);
             end
@@ -143,6 +157,17 @@ function density_bargraphs(data,args)
 end
 
 function multiple_bargraphs(data,args)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:  List PDC binary matrices
+    %         args:  Plotting arguments
+    %
+    % @return
+    %         Manage the generation of multiple Bar graphs in a single
+    %         figure
+    %
+    
     % Get plot arguments
     windowName=args('windowName');
     windowState=args('windowState');
@@ -181,11 +206,17 @@ function multiple_bargraphs(data,args)
 end
 
 function b = density_bars_comp(data,compare)
-    
-%     if size(data,2) ~= 4
-%        error(...
-%            sprintf("Error in 'density_bars_comp'\nArgument 'data' must have 'size(:,2)==2'"));
-%     end
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:  List of PDC binary matrices
+    %      compare:  argument used to switch among the comparisons
+    %      experiments
+    %
+    % @return
+    %         Plot a Bar graph of the Density values for the input data to
+    %         be compared
+    %
     
     % Collect data
     dens1_L = data(1).Left_Hemis_Density;
@@ -224,6 +255,14 @@ function b = density_bars_comp(data,compare)
 end
 
 function b = density_bars(data)
+    %%% Written by : Francesco Vincelli
+    %
+    % @params
+    %         data:  PDC Binary Matrix
+    
+    % @return
+    %         Plot a Bar graph showing Density values for the input data
+    %
     
     % Collect data
     dens_L = data.Left_Hemis_Density;
