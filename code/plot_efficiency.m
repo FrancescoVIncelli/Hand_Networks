@@ -70,19 +70,19 @@ args_LH_Ch21_f2=containers.Map(keys_LH_Ch21_f2,values_LH_Ch21_f2);
 %% Right Hand Execution/Imagination Movement Comparisons
 
 keys_RH_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
-values_RH_Ch64_f1=["multiple","f1","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+values_RH_Ch64_f1=["multiple","f1","64","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
 args_RH_Ch64_f1=containers.Map(keys_RH_Ch64_f1,values_RH_Ch64_f1);
 
 keys_RH_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
-values_RH_Ch64_f2=["multiple","f2","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+values_RH_Ch64_f2=["multiple","f2","64","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
 args_RH_Ch64_f2=containers.Map(keys_RH_Ch64_f2,values_RH_Ch64_f2);
 
 keys_RH_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
-values_RH_Ch21_f1=["multiple","f1","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+values_RH_Ch21_f1=["multiple","f1","21","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
 args_RH_Ch21_f1=containers.Map(keys_RH_Ch21_f1,values_RH_Ch21_f1);
 
 keys_RH_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
-values_RH_Ch21_f2=["multiple","f2","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
+values_RH_Ch21_f2=["multiple","f2","21","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
 args_RH_Ch21_f2=containers.Map(keys_RH_Ch21_f2,values_RH_Ch21_f2);
 
 
@@ -130,29 +130,29 @@ args_LRI_Ch21_f2=containers.Map(keys_LRI_Ch21_f2,values_LRI_Ch21_f2);
 % efficiency_plots(LeftHand_CH_64_f1, args_LH_Ch64_f1, ch_list_64);
 % efficiency_plots(LeftHand_CH_64_f2, args_LH_Ch64_f2, ch_list_64);
 % pause(0.5)
-% efficiency_plots(LeftHand_CH_21_f1, args_LH_Ch21_f1, ch_list_21);
-% efficiency_plots(LeftHand_CH_21_f2, args_LH_Ch21_f2, ch_list_21);
+efficiency_plots(LeftHand_CH_21_f1, args_LH_Ch21_f1, ch_list_21);
+efficiency_plots(LeftHand_CH_21_f2, args_LH_Ch21_f2, ch_list_21);
 % 
 % %% Right Hand Execution/Imagination Movement
 % efficiency_plots(RightHand_CH_64_f1, args_RH_Ch64_f1, ch_list_64);
 % efficiency_plots(RightHand_CH_64_f2, args_RH_Ch64_f2, ch_list_64);
 % pause(0.5);
-% efficiency_plots(RightHand_CH_21_f1, args_RH_Ch21_f1, ch_list_21);
-% efficiency_plots(RightHand_CH_21_f2, args_RH_Ch21_f2, ch_list_21);
+efficiency_plots(RightHand_CH_21_f1, args_RH_Ch21_f1, ch_list_21);
+efficiency_plots(RightHand_CH_21_f2, args_RH_Ch21_f2, ch_list_21);
 
 %% Left\Right Hand Execution Movement
 % efficiency_plots(LR_Exec_CH_64_f1, args_LRM_Ch64_f1, ch_list_64);
 % efficiency_plots(LR_Exec_CH_64_f2, args_LRM_Ch64_f2, ch_list_64);
 %pause(0.5)
-efficiency_plots(LR_Exec_CH_21_f1, args_LRM_Ch21_f1, ch_list_21);
-efficiency_plots(LR_Exec_CH_21_f2, args_LRM_Ch21_f2, ch_list_21);
+% efficiency_plots(LR_Exec_CH_21_f1, args_LRM_Ch21_f1, ch_list_21);
+% efficiency_plots(LR_Exec_CH_21_f2, args_LRM_Ch21_f2, ch_list_21);
 
 %% Left\Right Hand Imagination Movement
 % efficiency_plots(LR_Imag_CH_64_f1, args_LRI_Ch64_f1, ch_list_64);
 % efficiency_plots(LR_Imag_CH_64_f2, args_LRI_Ch64_f2, ch_list_64);
 %pause(0.5)
-efficiency_plots(LR_Imag_CH_21_f1, args_LRI_Ch21_f1, ch_list_21);
-efficiency_plots(LR_Imag_CH_21_f2, args_LRI_Ch21_f2, ch_list_21);
+% efficiency_plots(LR_Imag_CH_21_f1, args_LRI_Ch21_f1, ch_list_21);
+% efficiency_plots(LR_Imag_CH_21_f2, args_LRI_Ch21_f2, ch_list_21);
 
 
 function efficiency_plots(data, args, ch_list)
