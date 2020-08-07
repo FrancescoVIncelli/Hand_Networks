@@ -45,6 +45,11 @@ hand_networks/
 │   ├── density_dir.m           - Density of a directed graph is computed. Kept seperate because it is used in more
 │   │                             then on code
 │   └── get_node_pose.m         - This script gets pixel positions on an image which are used to plot the graph
+│   │
+│   ├── plot_degrees.m		- This script plots the degrees of each electrode position in the form of table
+│   ├── plot_degrees_hists.m	- This script plots the degrees in the form of a bar graph 
+│   ├── plot_density.m		- This script plots the densities in the form of a bar graph
+│   ├── plot_efficiency.m	- This script plots the efficiency in the form of topographical representation
 │
 ├── auxiliary/
 │   └── electrode_pos.JPG       - The image which is used to get the pixel position (obtained from PhusioNet)
@@ -61,12 +66,14 @@ This project perfroms a sequence of steps as shown below
    3. Computes the global indices (global efficiency and local efficiency)
    4. Computes the graph (edges and nodes) for plotting the graph
    5. Stores all the obtained results into a data structure
-5. Finally, all the results are plotted and stored in [output](output/) directory
+5. Finally, all the results are plotted by running their respective plot scripts
 
 ### Execution of the code
 - The only file that is to be run is the [main.m](code/main.m) file. Make sure to select the current path to be [code](code/) before running the script
 - The [main.m](code/main.m) file contains "Initialize Parameters" section where the frequencies and densities are to be set 
+- To get the plots, individual scripts have to be run to get degrees, densities and efficiency plots. Each of them has comparision functions in which individual samples can be comparte with the others. Make sure to uncomment the necessary plot before running the script. 
 
 ### Limitations
-- The code is hard coded for 21 channels and 64 channels. The indices should be updated if the number of channels are different
-- The project computes only the general kind of PDC (Baccalà and Sameshima, 2001) and one kind of normalization technique (Astolfi et al, 2007). Other PDC computation techniques can be implemented to get better results. 
+- The code is code to work for 21 channels and 64 channels. The indices should be updated if the number of channels are different
+- The project computes only the general kind of PDC (Baccalà and Sameshima, 2001) and one kind of normalization technique (Astolfi et al, 2007). Other PDC computation techniques can be implemented to get better results
+- All the plots are coded to work for only this application will have to be slightly modified based on the requirements. The functions are general which can be used for a differnt application with slight modification 
