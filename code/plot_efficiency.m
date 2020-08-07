@@ -1,24 +1,25 @@
-%% Topographical Plots Efficiency Indices
-%%% Francesco Vincelli, 2020
+%% AIM3 - Topographical Plots of Efficiency Indices
+
 warning off
 
 % Load channels locations system file
 % locs_filename=fullfile('..','data','locations.mat');
 % load(locs_filename);
 
-% 64-21 Channels lists
+% 64 Channels lists
 ch_list_64 = {'FC5','FC3','FC1','FCZ','FC2','FC4','FC6','C5','C3','C1','CZ',...
         'C2','C4','C6','CP5','CP3','CP1','CPZ','CP2','CP4','CP6','FP1','FPZ',...
         'FP2','AF7','AF3','AFZ','AF4','AF8','F7','F5','F3','F1','FZ','F2',...
         'F4','F6','F8','FT7','FT8','T7','T8','T9','T10','TP7','TP8','P7',...
         'P5','P3','P1','PZ','P2','P4','P6','P8','PO7','PO3','POZ','PO4',...
         'PO8','O1','OZ','O2','IZ'};
-    
+
+% 21 Channels lists
 ch_list_21 = {'FC5','FC3','FC1','FCZ','FC2','FC4','FC6','C5','C3',...
     'C1','CZ','C2','C4','C6','CP5','CP3','CP1','CPZ','CP2','CP4','CP6'};
 
 
-%% Group data for graphical comparison %%
+%% Group data for graphical comparison
 
 %% Left Hand Execution/Imagination Movement Comparisons
 LeftHand_CH_64_f1 = [LHM_CH_64_f1, LHI_CH_64_f1];
@@ -50,112 +51,107 @@ LR_Imag_CH_21_f2 = [LHI_CH_21_f2, RHI_CH_21_f2];
 
 %% Left Hand Execution/Imagination Movement Comparisons
 
-keys_LH_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
+keys_set={'plotType','freqs','channels','compare','figureName','dataIds'};
+
 values_LH_Ch64_f1=["multiple","f1","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
-args_LH_Ch64_f1=containers.Map(keys_LH_Ch64_f1,values_LH_Ch64_f1);
+args_LH_Ch64_f1=containers.Map(keys_set,values_LH_Ch64_f1);
 
-keys_LH_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LH_Ch64_f2=["multiple","f2","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
-args_LH_Ch64_f2=containers.Map(keys_LH_Ch64_f2,values_LH_Ch64_f2);
+args_LH_Ch64_f2=containers.Map(keys_set,values_LH_Ch64_f2);
 
-keys_LH_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LH_Ch21_f1=["multiple","f1","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
-args_LH_Ch21_f1=containers.Map(keys_LH_Ch21_f1,values_LH_Ch21_f1);
+args_LH_Ch21_f1=containers.Map(keys_set,values_LH_Ch21_f1);
 
-keys_LH_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LH_Ch21_f2=["multiple","f2","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
-args_LH_Ch21_f2=containers.Map(keys_LH_Ch21_f2,values_LH_Ch21_f2);
+args_LH_Ch21_f2=containers.Map(keys_set,values_LH_Ch21_f2);
 
 
 %% Right Hand Execution/Imagination Movement Comparisons
 
-keys_RH_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_RH_Ch64_f1=["multiple","f1","64","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
-args_RH_Ch64_f1=containers.Map(keys_RH_Ch64_f1,values_RH_Ch64_f1);
+args_RH_Ch64_f1=containers.Map(keys_set,values_RH_Ch64_f1);
 
-keys_RH_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_RH_Ch64_f2=["multiple","f2","64","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
-args_RH_Ch64_f2=containers.Map(keys_RH_Ch64_f2,values_RH_Ch64_f2);
+args_RH_Ch64_f2=containers.Map(keys_set,values_RH_Ch64_f2);
 
-keys_RH_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_RH_Ch21_f1=["multiple","f1","21","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
-args_RH_Ch21_f1=containers.Map(keys_RH_Ch21_f1,values_RH_Ch21_f1);
+args_RH_Ch21_f1=containers.Map(keys_set,values_RH_Ch21_f1);
 
-keys_RH_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_RH_Ch21_f2=["multiple","f2","21","exec-imag","Right Hand Execution/Imagination Movement","RHM_RHI"];
-args_RH_Ch21_f2=containers.Map(keys_RH_Ch21_f2,values_RH_Ch21_f2);
+args_RH_Ch21_f2=containers.Map(keys_set,values_RH_Ch21_f2);
 
 
 %% Left\Right Hand Execution Movement Comparisons
 
-keys_LRM_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRM_Ch64_f1=["multiple","f1","64","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
-args_LRM_Ch64_f1=containers.Map(keys_LRM_Ch64_f1,values_LRM_Ch64_f1);
+args_LRM_Ch64_f1=containers.Map(keys_set,values_LRM_Ch64_f1);
 
-keys_LRM_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRM_Ch64_f2=["multiple","f2","64","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
-args_LRM_Ch64_f2=containers.Map(keys_LRM_Ch64_f2,values_LRM_Ch64_f2);
+args_LRM_Ch64_f2=containers.Map(keys_set,values_LRM_Ch64_f2);
 
-keys_LRM_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRM_Ch21_f1=["multiple","f1","21","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
-args_LRM_Ch21_f1=containers.Map(keys_LRM_Ch21_f1,values_LRM_Ch21_f1);
+args_LRM_Ch21_f1=containers.Map(keys_set,values_LRM_Ch21_f1);
 
-keys_LRM_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRM_Ch21_f2=["multiple","f2","21","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
-args_LRM_Ch21_f2=containers.Map(keys_LRM_Ch21_f2,values_LRM_Ch21_f2);
+args_LRM_Ch21_f2=containers.Map(keys_set,values_LRM_Ch21_f2);
 
 
 %% Left\Right Hand Imagination Movement Comparisons
 
-keys_LRI_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRI_Ch64_f1=["multiple","f1","64","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
-args_LRI_Ch64_f1=containers.Map(keys_LRI_Ch64_f1,values_LRI_Ch64_f1);
+args_LRI_Ch64_f1=containers.Map(keys_set,values_LRI_Ch64_f1);
 
-keys_LRI_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRI_Ch64_f2=["multiple","f2","64","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
-args_LRI_Ch64_f2=containers.Map(keys_LRI_Ch64_f2,values_LRI_Ch64_f2);
+args_LRI_Ch64_f2=containers.Map(keys_set,values_LRI_Ch64_f2);
 
-keys_LRI_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRI_Ch21_f1=["multiple","f1","21","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
-args_LRI_Ch21_f1=containers.Map(keys_LRI_Ch21_f1,values_LRI_Ch21_f1);
+args_LRI_Ch21_f1=containers.Map(keys_set,values_LRI_Ch21_f1);
 
-keys_LRI_Ch21_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRI_Ch21_f2=["multiple","f2","21","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
-args_LRI_Ch21_f2=containers.Map(keys_LRI_Ch21_f2,values_LRI_Ch21_f2);
+args_LRI_Ch21_f2=containers.Map(keys_set,values_LRI_Ch21_f2);
 
 
 %% Plot Efficiency Maps
 
-% %% Left Hand Execution/Imagination Movement
-% efficiency_plots(LeftHand_CH_64_f1, args_LH_Ch64_f1, ch_list_64);
-% efficiency_plots(LeftHand_CH_64_f2, args_LH_Ch64_f2, ch_list_64);
-% pause(0.5)
+%% Left Hand Execution/Imagination Movement
+efficiency_plots(LeftHand_CH_64_f1, args_LH_Ch64_f1, ch_list_64);
+efficiency_plots(LeftHand_CH_64_f2, args_LH_Ch64_f2, ch_list_64);
+pause(0.5)
 efficiency_plots(LeftHand_CH_21_f1, args_LH_Ch21_f1, ch_list_21);
 efficiency_plots(LeftHand_CH_21_f2, args_LH_Ch21_f2, ch_list_21);
-% 
-% %% Right Hand Execution/Imagination Movement
-% efficiency_plots(RightHand_CH_64_f1, args_RH_Ch64_f1, ch_list_64);
-% efficiency_plots(RightHand_CH_64_f2, args_RH_Ch64_f2, ch_list_64);
-% pause(0.5);
+
+%% Right Hand Execution/Imagination Movement
+efficiency_plots(RightHand_CH_64_f1, args_RH_Ch64_f1, ch_list_64);
+efficiency_plots(RightHand_CH_64_f2, args_RH_Ch64_f2, ch_list_64);
+pause(0.5);
 efficiency_plots(RightHand_CH_21_f1, args_RH_Ch21_f1, ch_list_21);
 efficiency_plots(RightHand_CH_21_f2, args_RH_Ch21_f2, ch_list_21);
 
 %% Left\Right Hand Execution Movement
-% efficiency_plots(LR_Exec_CH_64_f1, args_LRM_Ch64_f1, ch_list_64);
-% efficiency_plots(LR_Exec_CH_64_f2, args_LRM_Ch64_f2, ch_list_64);
-%pause(0.5)
-% efficiency_plots(LR_Exec_CH_21_f1, args_LRM_Ch21_f1, ch_list_21);
-% efficiency_plots(LR_Exec_CH_21_f2, args_LRM_Ch21_f2, ch_list_21);
+efficiency_plots(LR_Exec_CH_64_f1, args_LRM_Ch64_f1, ch_list_64);
+efficiency_plots(LR_Exec_CH_64_f2, args_LRM_Ch64_f2, ch_list_64);
+pause(0.5)
+efficiency_plots(LR_Exec_CH_21_f1, args_LRM_Ch21_f1, ch_list_21);
+efficiency_plots(LR_Exec_CH_21_f2, args_LRM_Ch21_f2, ch_list_21);
 
 %% Left\Right Hand Imagination Movement
-% efficiency_plots(LR_Imag_CH_64_f1, args_LRI_Ch64_f1, ch_list_64);
-% efficiency_plots(LR_Imag_CH_64_f2, args_LRI_Ch64_f2, ch_list_64);
-%pause(0.5)
-% efficiency_plots(LR_Imag_CH_21_f1, args_LRI_Ch21_f1, ch_list_21);
-% efficiency_plots(LR_Imag_CH_21_f2, args_LRI_Ch21_f2, ch_list_21);
+efficiency_plots(LR_Imag_CH_64_f1, args_LRI_Ch64_f1, ch_list_64);
+efficiency_plots(LR_Imag_CH_64_f2, args_LRI_Ch64_f2, ch_list_64);
+pause(0.5)
+efficiency_plots(LR_Imag_CH_21_f1, args_LRI_Ch21_f1, ch_list_21);
+efficiency_plots(LR_Imag_CH_21_f2, args_LRI_Ch21_f2, ch_list_21);
 
 
 function efficiency_plots(data, args, ch_list)
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %         data:      List of Binary PDC Matrices
+    %         args:      Plotting arguments in a containers.Map format
+    %                    Map(keysSet, valuesSet)
+    % @return
+    %         Combinations of Efficiency indices plots for the input data
+    %
     
     plotType=args('plotType');
     freqs=args('freqs');
@@ -168,6 +164,7 @@ function efficiency_plots(data, args, ch_list)
     pltKeys={'plotTitle','windowName','windowState','numPlots'};
     
     switch compare
+        % Comparison between left and right-hand movement
         case "left-right"
             windowName=sprintf("%s: Efficiency Indices || Channels: %s | Frequencies: %s",figureName, channels, freqs);
             plotTitle=[sprintf('%s Global/Local Efficiency', ids{1}),...
@@ -181,6 +178,7 @@ function efficiency_plots(data, args, ch_list)
             multiple_maps(data,pltArgs, ch_list);
         
         case "exec-imag"
+            % Comparison between imagination and execution movement
             windowName=sprintf("%s: Efficiency Indices || Channels: %s | Frequencies: %s",figureName, channels,freqs);
             plotTitle=[sprintf('%s Global/Local Efficiency', ids{1}),...
                 sprintf('%s Global/Local Efficiency', ids{2})];
@@ -196,6 +194,17 @@ function efficiency_plots(data, args, ch_list)
 end
 
 function multiple_maps(data,args, ch_list)
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %         data:      List of Binary PDC Matrices
+    %         args:      Plotting arguments in a containers.Map format
+    %                    Map(keysSet, valuesSet)
+    %      ch_list:      List of recording channels
+    % @return
+    %         Figure comprising multiple Efficiency indices subplots
+    %
+    
     % Get plot arguments
     windowName=args('windowName');
     windowState=args('windowState');
@@ -205,12 +214,11 @@ function multiple_maps(data,args, ch_list)
     fig = figure('Name',windowName,'WindowState',windowState);
     
     if n_plots==2
-        % disp("_____efficiency_map______")
-        % Two-columns plot
+        % Two-columns plots
         idx=0;
         len=size(plotTitle,2)/2;
         for i=1:n_plots
-            ha(i) = subplot(1,2,i)
+            ha(i) = subplot(1,2,i);
             efficiency_map(data(i), ch_list);
 
             % Set plot title
@@ -219,9 +227,8 @@ function multiple_maps(data,args, ch_list)
             idx=idx+1;
         end
         
-        %  dim = [.2 .5 .3 .3];
-        %  str = sprintf('(Average) Local Efficiency: %s || GLobal Efficiency: %s',data.local_efficiency_avg, data.global_efficiency);
-        %  annotation('textbox',dim,'String',str,'FitBoxToText','on');
+        % Add annotation to the subplot, showing (Average) Local Eficiency
+        % and Global Efficiency values
         arrayfun(@(x) pbaspect(x, [1 1 1]), ha);
         drawnow;
         
@@ -233,6 +240,7 @@ function multiple_maps(data,args, ch_list)
                 data(ia).local_efficiency_avg, data(ia).global_efficiency);
             annotation(fig, 'textbox',  dim{ia}, 'String', str, 'vert', 'bottom', 'FitBoxToText','on');
         end
+    % Two-by-two plots matrix
     elseif n_plots==4
         idx=0;
         len=size(plotTitle,2)/4;
@@ -249,14 +257,17 @@ function multiple_maps(data,args, ch_list)
 end
 
 function tp = efficiency_map(data,ch_list)
+    %%% Written by : Francesco Vincelli
+	%     
+    % @params
+    %          data:   Binary PDC Matrix
+    %       ch_list:   List of recording channels 
+    % @return
+    %            tp:   Topographical plot of Local Efficiency values for
+    %                  each channel
+    %
+    
     locs_filename=fullfile('..','data','locations.mat');
-
-%     ch_list = {'FC5','FC3','FC1','FCZ','FC2','FC4','FC6','C5','C3','C1','CZ',...
-%         'C2','C4','C6','CP5','CP3','CP1','CPZ','CP2','CP4','CP6','FP1','FPZ',...
-%         'FP2','AF7','AF3','AFZ','AF4','AF8','F7','F5','F3','F1','FZ','F2',...
-%         'F4','F6','F8','FT7','FT8','T7','T8','T9','T10','TP7','TP8','P7',...
-%         'P5','P3','P1','PZ','P2','P4','P6','P8','PO7','PO3','POZ','PO4',...
-%         'PO8','O1','OZ','O2','IZ'};
     
     lev=data.local_efficiency_all;
     
@@ -266,12 +277,21 @@ function tp = efficiency_map(data,ch_list)
 end
 
 function save_system_CH64_file()
+    %%% Written by : Francesco Vincelli
+    %   Store 'locations.mat' containng the 64-channels measurement system
+    %   used in EDF+ data format
+    %
     locations = system_CH64_table();
     filename=fullfile('..','data','locations.mat')
     save(filename);
 end
 
 function locations_CH64 = system_CH64_table()
+    %%% Written by : Francesco Vincelli
+    %   Create the 64-channels measurement system file 'locations.mat' used
+    %   in plot_topographic function for the Efficiency indices mapping
+    %
+    
     ch_list = {'FC5','FC3','FC1','FCZ','FC2','FC4','FC6','C5','C3','C1','CZ',...
         'C2','C4','C6','CP5','CP3','CP1','CPZ','CP2','CP4','CP6','FP1','FPZ',...
         'FP2','AF7','AF3','AFZ','AF4','AF8','F7','F5','F3','F1','FZ','F2',...
