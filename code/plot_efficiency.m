@@ -58,7 +58,7 @@ keys_LH_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'}
 values_LH_Ch64_f2=["multiple","f2","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
 args_LH_Ch64_f2=containers.Map(keys_LH_Ch64_f2,values_LH_Ch64_f2);
 
-keys_LH_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+keys_LH_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LH_Ch21_f1=["multiple","f1","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
 args_LH_Ch21_f1=containers.Map(keys_LH_Ch21_f1,values_LH_Ch21_f1);
 
@@ -77,7 +77,7 @@ keys_RH_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'}
 values_RH_Ch64_f2=["multiple","f2","64","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
 args_RH_Ch64_f2=containers.Map(keys_RH_Ch64_f2,values_RH_Ch64_f2);
 
-keys_RH_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+keys_RH_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_RH_Ch21_f1=["multiple","f1","21","exec-imag","Left Hand Execution/Imagination Movement","LHM_LHI"];
 args_RH_Ch21_f1=containers.Map(keys_RH_Ch21_f1,values_RH_Ch21_f1);
 
@@ -96,7 +96,7 @@ keys_LRM_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'
 values_LRM_Ch64_f2=["multiple","f2","64","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
 args_LRM_Ch64_f2=containers.Map(keys_LRM_Ch64_f2,values_LRM_Ch64_f2);
 
-keys_LRM_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+keys_LRM_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRM_Ch21_f1=["multiple","f1","21","left-right","Left\Right Hand Execution Movement","LHM_RHM"];
 args_LRM_Ch21_f1=containers.Map(keys_LRM_Ch21_f1,values_LRM_Ch21_f1);
 
@@ -109,13 +109,13 @@ args_LRM_Ch21_f2=containers.Map(keys_LRM_Ch21_f2,values_LRM_Ch21_f2);
 
 keys_LRI_Ch64_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRI_Ch64_f1=["multiple","f1","64","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
-args_LEI_Ch64_f1=containers.Map(keys_LRI_Ch64_f1,values_LRI_Ch64_f1);
+args_LRI_Ch64_f1=containers.Map(keys_LRI_Ch64_f1,values_LRI_Ch64_f1);
 
 keys_LRI_Ch64_f2={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRI_Ch64_f2=["multiple","f2","64","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
 args_LRI_Ch64_f2=containers.Map(keys_LRI_Ch64_f2,values_LRI_Ch64_f2);
 
-keys_LRI_Ch21_f1={'plotType','freqs','channels','compare','figureName,','dataIds'};
+keys_LRI_Ch21_f1={'plotType','freqs','channels','compare','figureName','dataIds'};
 values_LRI_Ch21_f1=["multiple","f1","21","exec-imag","Left\Right Hand Imagination Movement","LHI_RHI"];
 args_LRI_Ch21_f1=containers.Map(keys_LRI_Ch21_f1,values_LRI_Ch21_f1);
 
@@ -141,26 +141,28 @@ args_LRI_Ch21_f2=containers.Map(keys_LRI_Ch21_f2,values_LRI_Ch21_f2);
 % efficiency_plots(RightHand_CH_21_f2, args_RH_Ch21_f2, ch_list_21);
 
 %% Left\Right Hand Execution Movement
-efficiency_plots(LR_Exec_CH_64_f1, args_LRM_Ch64_f1, ch_list_64);
-efficiency_plots(LR_Exec_CH_64_f2, args_LRM_Ch64_f2, ch_list_64);
+% efficiency_plots(LR_Exec_CH_64_f1, args_LRM_Ch64_f1, ch_list_64);
+% efficiency_plots(LR_Exec_CH_64_f2, args_LRM_Ch64_f2, ch_list_64);
 %pause(0.5)
 efficiency_plots(LR_Exec_CH_21_f1, args_LRM_Ch21_f1, ch_list_21);
-efficiency_plots(LR_Exec_CH_21_f2, args_LRM_Ch21_f1, ch_list_21);
+efficiency_plots(LR_Exec_CH_21_f2, args_LRM_Ch21_f2, ch_list_21);
 
 %% Left\Right Hand Imagination Movement
-efficiency_plots(LR_Imag_CH_64_f1, args_LRI_Ch64_f1, ch_list_64);
-efficiency_plots(LR_Imag_CH_64_f2, args_LRI_Ch64_f1, ch_list_64);
+% efficiency_plots(LR_Imag_CH_64_f1, args_LRI_Ch64_f1, ch_list_64);
+% efficiency_plots(LR_Imag_CH_64_f2, args_LRI_Ch64_f2, ch_list_64);
 %pause(0.5)
 efficiency_plots(LR_Imag_CH_21_f1, args_LRI_Ch21_f1, ch_list_21);
-efficiency_plots(LR_Imag_CH_21_f2, args_LRI_Ch21_f1, ch_list_21);
+efficiency_plots(LR_Imag_CH_21_f2, args_LRI_Ch21_f2, ch_list_21);
 
 
 function efficiency_plots(data, args, ch_list)
+    
     plotType=args('plotType');
     freqs=args('freqs');
     channels=args('channels');
     compare=args('compare');
-    dataIds=args('dataIds'); ids=strsplit(dataIds,'_');
+    dataIds=args('dataIds');
+    ids=strsplit(dataIds,'_');
     figureName=args('figureName');
     
     pltKeys={'plotTitle','windowName','windowState','numPlots'};
